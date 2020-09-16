@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
+//@Disabled // remove for tests to work during build
 class PalindromeTest {
     @Test
     void nullIsAnIlligalArgument() {
