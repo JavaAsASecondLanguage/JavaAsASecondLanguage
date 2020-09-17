@@ -1,14 +1,12 @@
 package io.github.javaasasecondlanguage.lecture01.practice2;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 class PalindromeTest {
     @Test
-    void nullIsAnIlligalArgument() {
+    void nullIsAnIllegalArgument() { // style checker doesn't catch typos
         assertThrows(
                 IllegalArgumentException.class,
                 () -> Palindrome.isPalindrome(null)
@@ -22,7 +20,7 @@ class PalindromeTest {
 
     @Test
     void singleLetterIsAPalindrome() {
-        for (var c = 'a'; c < 'z'; c++) {
+        for (var c = 'a'; c <= 'z'; c++) {
             assertTrue(Palindrome.isPalindrome(String.valueOf(c)));
         }
     }
