@@ -1,5 +1,8 @@
 package io.github.javaasasecondlanguage.lecture01.practice2;
 
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+
 public class Palindrome {
     /**
      * @param str - Nullable string
@@ -10,7 +13,25 @@ public class Palindrome {
      * 4. "abA" is not a palindrome.
      * @throws IllegalArgumentException if str is `null`
      */
-    public static boolean isPalindrome(String str) {
-        throw new RuntimeException("Not implemented");
+    public static boolean isPalindrome(String str) throws IllegalArgumentException {
+        if (str == null) {
+            throw new IllegalArgumentException("Null string");
+        }
+
+        CharacterIterator beg = new StringCharacterIterator(str);
+        CharacterIterator end = new StringCharacterIterator(str);
+        end.last();
+        beg.setIndex(beg.getBeginIndex());
+
+        boolean isPalindrome = true;
+        while (beg.getIndex() < end.getIndex()) {
+            if (beg.current() != end.current()) {
+                isPalindrome = false;
+                break;
+            }
+            end.previous();
+            beg.next();
+        }
+        return isPalindrome;
     }
 }
