@@ -6,8 +6,9 @@ import java.util.Comparator;
 
 public class IntervalsMerger {
     /**
-     * Given array of intervals, merge overlapping intervals and sort them by start in ascending order
-     * Interval is defined as [start, end] where start < end
+     * Given array of intervals, merge overlapping intervals and
+     * sort them by start in ascending order.
+     * Interval is defined as [start, end] where start < end.
      * <p>
      * Examples:
      * [[1,3][2,4][5,6]] -> [[1,4][5,6]]
