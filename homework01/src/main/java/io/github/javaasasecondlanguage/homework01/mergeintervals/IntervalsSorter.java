@@ -1,4 +1,4 @@
-package io.github.javaasasecondlanguage.homework01.compressor;
+package io.github.javaasasecondlanguage.homework01.mergeintervals;
 
 import java.util.Random;
 

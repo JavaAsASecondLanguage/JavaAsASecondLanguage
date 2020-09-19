@@ -1,7 +1,5 @@
 package io.github.javaasasecondlanguage.homework01.mergeintervals;
 
-import io.github.javaasasecondlanguage.homework01.compressor.IntervalsSorter;
-
 public class IntervalsMerger {
     /**
      * Given array of intervals, merge overlapping intervals
