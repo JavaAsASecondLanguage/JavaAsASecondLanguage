@@ -28,7 +28,37 @@ public class StringCompressor {
      * @throws IllegalArgumentException if str is null
      * @throws IllegalArgumentException if any char is not in range 'a'..'z'
      */
-    public char[] compress(char[] str) {
-        throw new RuntimeException("Not implemented");
+    public char[] compress(char[] str) throws IllegalArgumentException {
+        if (str == null) {
+            throw new IllegalArgumentException();
+        }
+
+        StringBuilder strBuilder = new StringBuilder();
+        char prevChar = '\0';
+        int numOfOcs = 0;
+        for (char c : str) {
+            if (!Character.isAlphabetic(c)) {
+                throw new IllegalArgumentException();
+            }
+
+            if (prevChar != '\0' && prevChar != c) {
+                strBuilder.append(prevChar);
+                if (numOfOcs > 1) {
+                    strBuilder.append(numOfOcs);
+                }
+                numOfOcs = 0;
+            }
+
+            prevChar = c;
+            numOfOcs++;
+        }
+        if (numOfOcs >= 1) {
+            strBuilder.append(prevChar);
+        }
+        if (numOfOcs > 1) {
+            strBuilder.append(numOfOcs);
+        }
+
+        return strBuilder.toString().toCharArray();
     }
 }
