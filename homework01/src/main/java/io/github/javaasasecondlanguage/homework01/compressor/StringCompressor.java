@@ -29,6 +29,45 @@ public class StringCompressor {
      * @throws IllegalArgumentException if any char is not in range 'a'..'z'
      */
     public char[] compress(char[] str) {
-        throw new RuntimeException("Not implemented");
+        // check str is null
+        if (str == null) {
+            throw new IllegalArgumentException("Illegal argument: " + str);
+        }
+
+        // check str is empty
+        if (str.length == 0) {
+            return str;
+        }
+
+        int nb = 1;
+        //char[] res = new char[]{};
+        StringBuilder res = new StringBuilder();
+        if ((str[0] >= 'a') & (str[0] <= 'z')) {
+            res.append(str[0]);
+        } else {
+            throw new IllegalArgumentException("Illegal argument: " + str[0]);
+        }
+        for (int i = 1; i < str.length; i++) {
+            if ((str[i] >= 'a') & (str[i] <= 'z')) {
+                if (str[i] == str[i - 1]) {
+                    nb++;
+                } else {
+                    if (nb > 1) {
+                        res.append(nb);
+                    }
+                    res.append(str[i]);
+                    nb = 1;
+                }
+            } else {
+                throw new IllegalArgumentException("Illegal argument: " + str[0]);
+            }
+        }
+        if (nb > 1) {
+            res.append(nb);
+        }
+
+        String temp = res.toString();
+        char[] reschars = temp.toCharArray();
+        return reschars;
     }
 }
