@@ -25,5 +25,13 @@ public class Palindrome {
             --i2;
         }
         return true;
+
+/*
+        if (str == null) {
+            throw new IllegalArgumentException();
+        }
+        // use reverse string
+
+ */
     }
 }
