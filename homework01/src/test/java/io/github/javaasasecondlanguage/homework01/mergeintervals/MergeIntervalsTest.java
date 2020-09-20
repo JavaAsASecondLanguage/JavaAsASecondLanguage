@@ -23,14 +23,14 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void emptyIntervalListIsAlreadyMerged() {
+    void emptyIntervalListIsAlreadyMerged() throws IllegalAccessException {
         var emptyIntervalArray = new int[][]{};
         var result = intervalsMerger.merge(emptyIntervalArray);
         assertArrayEquals(emptyIntervalArray, result);
     }
 
     @Test
-    void sample1() {
+    void sample1() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{1, 3},
                 new int[]{2, 4},
@@ -45,7 +45,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample2() {
+    void sample2() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{1, 2},
                 new int[]{2, 3}
@@ -58,7 +58,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample3() {
+    void sample3() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{1, 4},
                 new int[]{2, 3}
@@ -71,7 +71,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample4() {
+    void sample4() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{5, 6},
                 new int[]{1, 2}
@@ -85,7 +85,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample5() {
+    void sample5() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{1, 4},
                 new int[]{2, 5}
@@ -98,7 +98,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample6() {
+    void sample6() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{1, 2},
                 new int[]{2, 3}
@@ -111,7 +111,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample7() {
+    void sample7() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{2, 3},
                 new int[]{1, 2}
@@ -124,7 +124,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample8() {
+    void sample8() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{5, 6},
                 new int[]{1, 2}
@@ -138,7 +138,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample9() {
+    void sample9() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{3, 4},
                 new int[]{5, 6},
@@ -154,7 +154,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample10() {
+    void sample10() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{1, 3},
                 new int[]{2, 4},
@@ -168,7 +168,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample11() {
+    void sample11() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{5, 6},
                 new int[]{1, 3},
@@ -183,7 +183,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample12() {
+    void sample12() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{2, 3},
                 new int[]{3, 4},
@@ -197,7 +197,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void sample13() {
+    void sample13() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{Integer.MIN_VALUE, 0},
                 new int[]{0, Integer.MAX_VALUE}
@@ -210,7 +210,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void duplicateIntervals1() {
+    void duplicateIntervals1() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{1, 2},
                 new int[]{1, 2}
@@ -223,7 +223,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void duplicateIntervals2() {
+    void duplicateIntervals2() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{1, 2},
                 new int[]{3, 4},
@@ -238,7 +238,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void singleIntervalIsSorted1() {
+    void singleIntervalIsSorted1() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{1, 3}
         };
@@ -247,7 +247,7 @@ class MergeIntervalsTest {
     }
 
     @Test
-    void singleIntervalIsSorted2() {
+    void singleIntervalIsSorted2() throws IllegalAccessException {
         var intervals = new int[][]{
                 new int[]{-3, 3}
         };
