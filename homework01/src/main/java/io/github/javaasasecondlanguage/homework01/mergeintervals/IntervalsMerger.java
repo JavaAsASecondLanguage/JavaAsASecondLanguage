@@ -2,6 +2,10 @@ package io.github.javaasasecondlanguage.homework01.mergeintervals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+<<<<<<< HEAD
+=======
+import java.util.Collections;
+>>>>>>> first homework done
 import java.util.Comparator;
 
 public class IntervalsMerger {
@@ -19,6 +23,10 @@ public class IntervalsMerger {
      * @return merged intervals
      * @throws IllegalArgumentException if intervals is null
      */
+<<<<<<< HEAD
+=======
+
+>>>>>>> first homework done
     public int[][] merge(int[][] intervals) throws IllegalArgumentException {
 
         if (intervals == null) {
