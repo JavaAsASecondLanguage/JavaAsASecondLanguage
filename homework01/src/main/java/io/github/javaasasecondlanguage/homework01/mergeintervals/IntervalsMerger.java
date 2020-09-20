@@ -1,8 +1,19 @@
 package io.github.javaasasecondlanguage.homework01.mergeintervals;
 
+import java.util.*;
+
 public class IntervalsMerger {
+
+    private class IntervalComparator implements Comparator<int[]> {
+        @Override
+        public int compare(int[] a, int[] b) {
+            return a[0] < b[0] ? -1 : a[0] == b[0] ? 0 : 1;
+        }
+    }
+
     /**
-     * Given array of intervals, merge overlapping intervals and sort them by start in ascending order
+     * Given array of intervals, merge overlapping intervals
+     * and sort them by start in ascending order
      * Interval is defined as [start, end] where start < end
      * <p>
      * Examples:
@@ -16,6 +27,18 @@ public class IntervalsMerger {
      * @throws IllegalArgumentException if intervals is null
      */
     public int[][] merge(int[][] intervals) {
-        throw new RuntimeException("Not implemented");
+        if (intervals == null) {
+            throw new IllegalArgumentException();
+        }
+        Collections.sort(Arrays.asList(intervals), new IntervalComparator());
+        Deque<int[]> merged = new LinkedList<>();
+        for (int[] interval : intervals) {
+            if (merged.isEmpty() || merged.getLast()[1] < interval[0]) {
+                merged.add(interval);
+            } else {
+                merged.getLast()[1] = Math.max(merged.getLast()[1], interval[1]);
+            }
+        }
+        return merged.toArray(new int[merged.size()][]);
     }
 }
