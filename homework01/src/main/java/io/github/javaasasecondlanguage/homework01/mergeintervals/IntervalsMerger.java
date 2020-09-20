@@ -1,5 +1,9 @@
 package io.github.javaasasecondlanguage.homework01.mergeintervals;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class IntervalsMerger {
     /**
      * Given array of intervals, merge overlapping intervals and sort them by start in ascending order
