@@ -2,7 +2,8 @@ package io.github.javaasasecondlanguage.homework01.mergeintervals;
 
 public class IntervalsMerger {
     /**
-     * Given array of intervals, merge overlapping intervals and sort them by start in ascending order
+     * Given array of intervals, merge overlapping intervals
+     * and sort them by start in ascending order
      * Interval is defined as [start, end] where start < end
      * <p>
      * Examples:
