@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.*;
 
 
-class Interval
-{
+class Interval {
     private int start;
     private int end;
 
@@ -14,8 +13,7 @@ class Interval
         end = 0;
     }
 
-    Interval(int s, int e)
-    {
+    Interval(int s, int e) {
         start = s;
         end = e;
     }
@@ -29,10 +27,8 @@ class Interval
     }
 }
 
-class IntervalComparator implements Comparator<Interval>
-{
-    public int compare(Interval i1, Interval i2)
-    {
+class IntervalComparator implements Comparator<Interval> {
+    public int compare(Interval i1, Interval i2) {
         return i1.getStart() / 2 - i2.getStart() / 2;
     }
 }
@@ -60,11 +56,11 @@ public class IntervalsMerger {
         ArrayList<Interval> x = new ArrayList<>();
 
 
-        for (int i=0; i < intervals.length; i++) {
+        for (int i = 0; i < intervals.length; i++) {
             x.add(new Interval(intervals[i][0], intervals[i][1]));
         }
 
-        if(x.size() == 0 || x.size() == 1)
+        if (x.size() == 0 || x.size() == 1)
             return intervals;
 
         Collections.sort(x, new IntervalComparator());
