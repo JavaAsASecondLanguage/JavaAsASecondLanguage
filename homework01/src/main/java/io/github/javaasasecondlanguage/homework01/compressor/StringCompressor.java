@@ -64,9 +64,9 @@ public class StringCompressor {
         		}
         	}
 
-			if ( charCounter > 1) {
+		if ( charCounter > 1)
     			stringBuilder.append(charCounter);
-			}
+
     	}
 
     	return stringBuilder.toString().toCharArray();
@@ -77,6 +77,7 @@ public class StringCompressor {
 	private char checkCharacter(char c) {
 		
 		if ( c >= 'a' && c <= 'z') {
+			
 			return c;
 			
 		} else {
