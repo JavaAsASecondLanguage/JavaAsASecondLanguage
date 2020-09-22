@@ -6,7 +6,8 @@ import java.util.Comparator;
 
 public class IntervalsMerger {
     /**
-     * Given array of intervals, merge overlapping intervals and sort them by start in ascending order
+     * Given array of intervals, merge overlapping intervals and sort
+     * them by start in ascending order
      * Interval is defined as [start, end] where start < end
      * <p>
      * Examples:
@@ -39,7 +40,7 @@ public class IntervalsMerger {
                 l.add(interval);
             } else {
                 if (interval[0] <= l.get(l.size() - 1)[1]) {
-                    l.set(l.size()-1, new int[]{l.get(l.size() - 1)[0],
+                    l.set(l.size() - 1, new int[]{l.get(l.size() - 1)[0],
                             Math.max(l.get(l.size() - 1)[1], interval[1])});
                 } else {
                     l.add(interval);
