@@ -19,6 +19,7 @@ public class IntervalsMerger {
      * @throws IllegalArgumentException if intervals is null
      */
     public int[][] merge(int[][] intervals) {
+        // check if intervals array equals null
         if (intervals == null) {
             throw new IllegalArgumentException();
         }

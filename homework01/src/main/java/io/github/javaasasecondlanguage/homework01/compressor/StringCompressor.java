@@ -60,7 +60,7 @@ public class StringCompressor {
                 count = 1;
             }
         }
-        // append compressed block one more time
+        // append compressed block one more time 
         result = addCompressedBlock(result, previousCharacter, count);
 
         return result.toString().toCharArray();
