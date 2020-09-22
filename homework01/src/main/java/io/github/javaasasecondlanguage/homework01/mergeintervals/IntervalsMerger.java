@@ -36,7 +36,8 @@ public class IntervalsMerger {
     }
 
     /**
-     * Given array of intervals, merge overlapping intervals and sort them by start in ascending order
+     * Given array of intervals, merge overlapping intervals
+     * and sort them by start in ascending order
      * Interval is defined as [start, end] where start < end
      * <p>
      * Examples:
@@ -61,8 +62,9 @@ public class IntervalsMerger {
             x.add(new Interval(intervals[i][0], intervals[i][1]));
         }
 
-        if (x.size() == 0 || x.size() == 1)
+        if (x.size() == 0 || x.size() == 1) {
             return intervals;
+        }
 
         Collections.sort(x, new IntervalComparator());
 
