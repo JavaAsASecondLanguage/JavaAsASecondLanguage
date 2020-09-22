@@ -29,6 +29,49 @@ public class StringCompressor {
      * @throws IllegalArgumentException if any char is not in range 'a'..'z'
      */
     public char[] compress(char[] str) {
-        throw new RuntimeException("Not implemented");
+
+        // check that input is not null
+        if (str == null) {
+            throw new IllegalArgumentException();
+        }
+
+        // check that there are no illegal characters
+        for (char c : str) {
+            if (c < 'a' || c > 'z') {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        if (str.length <= 1) {
+            return str;
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        char previousCharacter = str[0];
+        int count = 1;
+        for (int i = 1; i < str.length; i++) {
+
+            if (str[i] == previousCharacter) {
+                count++;
+            } else {
+                result = addCompressedBlock(result, previousCharacter, count);
+                previousCharacter = str[i];
+                count = 1;
+            }
+        }
+        // append compressed block one more time
+        result = addCompressedBlock(result, previousCharacter, count);
+
+        return result.toString().toCharArray();
     }
+
+    private StringBuilder addCompressedBlock(StringBuilder current, char ch, int count) {
+        if (count == 1) {
+            return current.append(ch);
+        } else {
+            return current.append(ch).append(Integer.toString(count));
+        }
+    }
+
 }
