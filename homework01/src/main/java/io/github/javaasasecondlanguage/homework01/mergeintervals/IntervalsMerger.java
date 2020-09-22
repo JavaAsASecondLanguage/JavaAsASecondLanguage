@@ -4,7 +4,8 @@ import java.util.*;
 
 public class IntervalsMerger {
     /**
-     * Given array of intervals, merges overlapping intervals and sort by start in ascending order
+     * Given array of intervals, merges overlapping intervals and sort by start
+     * in ascending order
      * Interval is defined as [start,end] where start < end
      * <p>
      * Examples:
