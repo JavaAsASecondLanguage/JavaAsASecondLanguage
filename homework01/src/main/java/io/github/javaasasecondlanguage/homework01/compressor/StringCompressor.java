@@ -28,7 +28,45 @@ public class StringCompressor {
      * @throws IllegalArgumentException if str is null
      * @throws IllegalArgumentException if any char is not in range 'a'..'z'
      */
+    private boolean isAlpha(char[] str) {
+        for (var c : str) {
+            if (!(c >= 'a' && c <= 'z')) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public char[] compress(char[] str) {
-        throw new RuntimeException("Not implemented");
+        if (str == null) {
+            throw new IllegalArgumentException("Argument cannot be null");
+        }
+        if (!isAlpha(str)) {
+            throw new IllegalArgumentException("Non-alphabetic characters in string");
+        }
+        if (str.length < 2) {
+            return str;
+        }
+
+        var compressed = new java.lang.StringBuilder();
+        var currentChar = str[0];
+        var count = 1;
+        for (int i = 1; i < str.length; i++) {
+            if (currentChar != str[i]) {
+                compressed.append(currentChar);
+                if (count > 1) {
+                    compressed.append(count);
+                }
+                currentChar = str[i];
+                count = 1;
+            } else {
+                count++;
+            }
+        }
+        compressed.append(currentChar);
+        if (count > 1) {
+            compressed.append(count);
+        }
+        return compressed.toString().toCharArray();
     }
 }
