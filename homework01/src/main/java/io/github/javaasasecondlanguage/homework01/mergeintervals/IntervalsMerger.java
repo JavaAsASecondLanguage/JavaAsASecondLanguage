@@ -4,36 +4,37 @@ import java.util.ArrayList;
 import java.util.*;
 
 
-class Interval {
-    private int start;
-    private int end;
-
-    Interval() {
-        start = 0;
-        end = 0;
-    }
-
-    Interval(int s, int e) {
-        start = s;
-        end = e;
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public int getEnd() {
-        return end;
-    }
-}
-
-class IntervalComparator implements Comparator<Interval> {
-    public int compare(Interval i1, Interval i2) {
-        return i1.getStart() / 2 - i2.getStart() / 2;
-    }
-}
-
 public class IntervalsMerger {
+
+    class Interval {
+        private int start;
+        private int end;
+
+        Interval() {
+            start = 0;
+            end = 0;
+        }
+
+        Interval(int s, int e) {
+            start = s;
+            end = e;
+        }
+
+        public int getStart() {
+            return start;
+        }
+
+        public int getEnd() {
+            return end;
+        }
+    }
+
+    class IntervalComparator implements Comparator<Interval> {
+        public int compare(Interval i1, Interval i2) {
+            return i1.getStart() / 2 - i2.getStart() / 2;
+        }
+    }
+
     /**
      * Given array of intervals, merge overlapping intervals and sort them by start in ascending order
      * Interval is defined as [start, end] where start < end
