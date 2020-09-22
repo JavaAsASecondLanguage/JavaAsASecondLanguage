@@ -48,8 +48,7 @@ public class StringCompressor {
             } else {
                 if (counter > 1) {
                     while (counter > 0) {
-                        int tempChar = counter % 10 + '0';
-                        compressedArr.add((char) tempChar);
+                        compressedArr.add((char) (counter % 10 + '0'));
                         counter /= 10;
                     }
                 }
@@ -59,7 +58,7 @@ public class StringCompressor {
         }
         if (counter > 1) {
             while (counter > 0) {
-                compressedArr.add((char)(counter % 10 + '0'));
+                compressedArr.add((char) (counter % 10 + '0'));
                 counter /= 10;
             }
         }
