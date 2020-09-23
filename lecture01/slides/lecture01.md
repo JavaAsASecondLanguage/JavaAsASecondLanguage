@@ -27,6 +27,16 @@
 - **Люблю смотреть, как другие работают**  
 
 ---
+## Agenda
+1. How to pass this course
+1. How to set up Java environment
+1. How to submit your practice and homework
+1. JShell
+1. Hello World, the dark side
+1. JDK, JRE, and JVM
+1. Practice!
+
+---
 # Why Java?
 
 ---
@@ -64,17 +74,17 @@
   
 ---
 ## Домашние задания
-Все домашние задания сдаются в виде pull request в репозиторий курса
-https://github.com/JavaAsASecondLanguage/JavaAsASecondLanguage 
+Все домашние задания сдаются в виде **pull request**'ов в репозиторий курса
+[github.com/JavaAsASecondLanguage](https://github.com/JavaAsASecondLanguage/JavaAsASecondLanguage)
 
-Срок сдачи - до дня следующей лекции
+Срок сдачи - день следующей лекции
 
 ---
 # Setup
 
 ---
 ## Install JDK 14
-Instructions
+With sdkman
 https://sdkman.io/install
 
 ---
@@ -100,6 +110,12 @@ https://git-scm.com/
 
 ^^^
 # что вы хотите получить от курса?
+
+---
+## Gradle
+- gradle - is a build system
+- gradlew, gradle.bat - standalone gradle distributions, you do not need to install anything
+- lecture01/build.gradle.kts defines build options and dependent libraries
 
 
 ---
@@ -162,36 +178,32 @@ public class Hello {
 
 ---
 ## .class contains bytecode
-project containing several java files will compile to a bunch of .class files.
+Project with several java files will be compiled to a bunch of .class files.
 
-To link several .class files use -cp option
+To link several .class files use -cp option.
 ```shell script
 java HelloWorld -cp SomeClassINeed.class SomeClassINeed2.class
 ```
-Classpath contains a collection of .class files
+Classpath contains a collection of .class files.
 
 ---
 ## .jar contains a bunch of .class file + resources
-The standard form of distribution is *jar* - java archive
-*jar* utility can package them into single .jar file, which can be executed or added to classpath
+A standard form of distribution is *jar* - java archive.
+
+
+*jar* utility can package them into a single .jar file, which can be executed or added to the classpath.
 
 
 ---
 ## Practice 1. make Pull Request to project repository
- [ ] Make new branch from lecture01
+ - Make new branch from lecture01
 ```shell script
 checkout -b practice1 upstream/lecture01
 ```
- [ ] Un-ignore tests lecture01/practice1
- [ ] Fix the code
- [ ] Make sure tests run successfully with gradle
- [ ] Make pull request to [project repository](https://github.com/JavaAsASecondLanguage/JavaAsASecondLanguage) branch lecture01
-
----
-## Gradle
-- gradle - is a build system
-- gradlew, gradle.bat - standalone gradle distributions, you do not need to install anything
-- lecture01/build.gradle.kts defines build options and dependent libraries
+ - Un-ignore tests lecture01/practice1
+ - Fix the code
+ - Make sure tests run successfully with gradle
+ - Make pull request to the [project repository](https://github.com/JavaAsASecondLanguage/JavaAsASecondLanguage) **branch lecture01**
 
 ---
 ## Gradle how to
@@ -210,6 +222,9 @@ Build and run tests
 ```
 
 ---
+## How to submit practice or homework?
+
+---
 ## 1. Fork the repository
 [Course repository](https://github.com/JavaAsASecondLanguage/JavaAsASecondLanguage)
 
@@ -222,7 +237,8 @@ git clone https://github.com/YOUR_USERNAME/JavaAsASecondLanguage.git
 
 ---
 ## 3. Connect your working copy with course repository
-2. Свяжем **рабочую копию вашего форка** с **репозиторием курса**, чтобы вы могли их синхронизировать и работать со свежей версией кода и проверим, что это сработало
+Свяжем **рабочую копию вашего форка** с **репозиторием курса**, 
+чтобы вы могли их синхронизировать и работать со свежей версией кода и проверим, что это сработало
 ```bash
 cd JavaAsASecondLanguage
 git remote add upstream https://github.com/JavaAsASecondLanguage/JavaAsASecondLanguage.git
@@ -232,6 +248,8 @@ origin  https://github.com/YOUR_USERNAME/JavaAsASecondLanguage.git (push)
 upstream https://github.com/JavaAsASecondLanguage/JavaAsASecondLanguage.git (fetch)
 upstream https://github.com/JavaAsASecondLanguage/JavaAsASecondLanguage.git (push)
 ```
+
+^^^
 Теперь ваш fork будет известен git-у как **origin** (по умолчанию)  
 а репозиторий курса - как **upstream** (только что настроили)  
 
@@ -329,6 +347,9 @@ git config --global core.editor notepad
 ```
 
 ---
+## Getting back to Java
+
+---
 ## Java Facts
 - Java is cross-platform - 'Write Once, Run Anywhere' (WORA)
 - Java is compiled to Byte Code, which is executed by Java Virtual Machine (JVM)
@@ -371,15 +392,15 @@ https://www.jrebel.com/blog/2020-java-technology-report#JDK-distribution
 
 ---
 ## Practice 2
-## make Pull Request to project repository
- [ ] Make new branch from lecture01
+## Make a Pull Request to the project repository
+ - Make a new branch from lecture01
 ```shell script
 checkout -b practice2 upstream/lecture01
 ```
- [ ] Un-ignore tests lecture01/practice2
- [ ] Write your solution
- [ ] Make sure tests run successfully with gradle
- [ ] Make pull request with to [project repository](https://github.com/JavaAsASecondLanguage/JavaAsASecondLanguage) branch lecture01
+ - Un-ignore tests lecture01/practice2
+ - Implement your solution
+ - Make sure tests run successfully with gradle
+ - Make pull request with to [project repository](https://github.com/JavaAsASecondLanguage/JavaAsASecondLanguage) branch lecture01
 
 ---
 ## More to learn
@@ -391,4 +412,11 @@ https://medium.com/swlh/how-to-use-jshell-to-improve-your-java-skills-170557d1d6
 https://www.atlassian.com/git/tutorials/using-branches
 - JDK 15 is General Availability
 https://openjdk.java.net/projects/jdk/15/
+
 ---
+## Today I Learned
+1. How to pass this course
+1. How to set up Java environment
+1. How to submit practice and homework
+1. About JDK, JRE, and JVM
+
