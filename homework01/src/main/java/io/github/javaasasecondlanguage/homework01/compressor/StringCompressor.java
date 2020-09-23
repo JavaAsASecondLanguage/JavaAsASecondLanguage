@@ -1,5 +1,7 @@
 package io.github.javaasasecondlanguage.homework01.compressor;
 
+import java.lang.StringBuilder;
+
 public class StringCompressor {
     /**
      * Given an array of characters, compress it using the following algorithm:
@@ -29,6 +31,46 @@ public class StringCompressor {
      * @throws IllegalArgumentException if any char is not in range 'a'..'z'
      */
     public char[] compress(char[] str) {
-        throw new RuntimeException("Not implemented");
+        StringBuilder stringBuilder = new StringBuilder();
+        if (str == null) {
+            throw new IllegalArgumentException("str is null");
+        }
+
+        if (str.length > 0) {
+
+            char c = checkCharacter(str[0]);
+            int charCounter = 1;
+
+            stringBuilder.append(c);
+
+            for (int i = 1; i < str.length; i++) {
+
+                char newChar = checkCharacter(str[i]);
+
+                if (c == newChar) {
+                    charCounter++;
+                } else {
+                    if (charCounter > 1) {
+                        stringBuilder.append(charCounter);
+                    }
+                    c = newChar;
+                    stringBuilder.append(c);
+                    charCounter = 1;
+                }
+            }
+
+            if (charCounter > 1) {
+                stringBuilder.append(charCounter);
+            }
+        }
+        return stringBuilder.toString().toCharArray();
+    }
+
+    private char checkCharacter(char c) {
+        if (c >= 'a' && c <= 'z') {
+            return c;
+        } else {
+            throw new IllegalArgumentException("char '" + c + "' is not in range 'a'..'z'");
+        }
     }
 }
