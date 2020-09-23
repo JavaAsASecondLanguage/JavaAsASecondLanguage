@@ -35,7 +35,7 @@ public class StringCompressor {
 
         for (var i = 0; i < str.length; i++) {
             if (str[i] < 'a' || str[i] > 'z') {
-                throw new IllegalArgumentException(String.format("Contains illegal char {0} at position {1}!", i, str[i]));
+                throw new IllegalArgumentException(String.format("Illegal char at index {0}!", i));
             }
         }
 
