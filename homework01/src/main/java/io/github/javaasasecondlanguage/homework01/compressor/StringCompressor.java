@@ -1,3 +1,4 @@
+
 package io.github.javaasasecondlanguage.homework01.compressor;
 
 public class StringCompressor {
@@ -22,12 +23,12 @@ public class StringCompressor {
      * null -> Illegal argument
      * 234 sdf -> Illegal argument
      *
-     * @param str nullable array of chars to compress
-     *            str may contain illegal characters
+     * @param str nullable array of chars to compress str may contain illegal characters
      * @return a compressed array
      * @throws IllegalArgumentException if str is null
      * @throws IllegalArgumentException if any char is not in range 'a'..'z'
      */
+
     public static char charValidated(char s) {
         if ((s >= 'a') && (s <= 'z')) {
             return s;
@@ -43,22 +44,22 @@ public class StringCompressor {
         if (str.length == 0) {
             return str;
         }
-        String s = "";
+        StringBuilder s = new StringBuilder();
         int curCounter = 1;
         char prev = charValidated(str[0]);
-        for(int i = 1; i < str.length; i++) {
+        for (int i = 1; i < str.length; i++) {
             char cur = charValidated(str[i]);
             if (cur == prev) {
                 curCounter += 1;
             } else {
-                s += prev;
-                s += (curCounter == 1) ? "" : curCounter;
+                s.append(prev);
+                s.append((curCounter == 1) ? "" : curCounter);
                 prev = cur;
                 curCounter = 1;
             }
         }
-        s += prev;
-        s += (curCounter == 1) ? "" : curCounter;
-        return s.toCharArray();
+        s.append(prev);
+        s.append((curCounter == 1) ? "" : curCounter);
+        return s.toString().toCharArray();
     }
 }

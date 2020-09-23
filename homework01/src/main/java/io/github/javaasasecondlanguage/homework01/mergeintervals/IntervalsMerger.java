@@ -1,3 +1,4 @@
+
 package io.github.javaasasecondlanguage.homework01.mergeintervals;
 
 import java.util.ArrayList;
@@ -5,7 +6,8 @@ import java.util.List;
 
 public class IntervalsMerger {
     /**
-     * Given array of intervals, merge overlapping intervals and sort them by start in ascending order
+     * Given array of intervals, merge overlapping intervals and sort them
+     * by start in ascending order
      * Interval is defined as [start, end] where start < end
      * <p>
      * Examples:
@@ -18,16 +20,18 @@ public class IntervalsMerger {
      * @return merged intervals
      * @throws IllegalArgumentException if intervals is null
      */
-    public class Interval {
+
+    public static class Interval {
         int start;
         int end;
+
         public Interval(int[] bounds) {
             this.start = bounds[0];
             this.end = bounds[1];
         }
+
         public int[] toArray() {
-            int[] arr = {this.start, this.end};
-            return arr;
+            return new int[]{this.start, this.end};
         }
     }
 
