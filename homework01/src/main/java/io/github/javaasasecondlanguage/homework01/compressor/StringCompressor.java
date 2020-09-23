@@ -32,7 +32,7 @@ public class StringCompressor {
     @SuppressWarnings("checkstyle:Indentation")
     public char[] compress(char[] str) {
         final int numberOfLetters = 26;
-//        check for null
+        // check for null
         if (str == null) {
             throw new IllegalArgumentException();
         }
@@ -63,8 +63,6 @@ public class StringCompressor {
             }
             pastChar = c;
         }
-
-//        throw new RuntimeException("Not implemented");
 
         return result.toString().toCharArray();
     }

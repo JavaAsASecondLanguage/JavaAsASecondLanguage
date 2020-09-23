@@ -10,7 +10,8 @@ import static java.lang.Math.max;
 
 public class IntervalsMerger {
     /**
-     * Given array of intervals, merge overlapping intervals and sort them by start in ascending order
+     * Given array of intervals,
+     * merge overlapping intervals and sort them by start in ascending order
      * Interval is defined as [start, end] where start < end
      * <p>
      * Examples:
@@ -48,7 +49,9 @@ public class IntervalsMerger {
 
         for (int i = 1; i < inputList.size(); i++) {
             if (result.get(result.size() - 1)[1] >= inputList.get(i)[0]) {
-                result.get(result.size() - 1)[1] = max(inputList.get(i)[1], result.get(result.size() - 1)[1]);
+                result.get(result.size() - 1)[1] = max(
+                        inputList.get(i)[1],
+                        result.get(result.size() - 1)[1]);
             } else {
                 result.add(inputList.get(i));
             }
