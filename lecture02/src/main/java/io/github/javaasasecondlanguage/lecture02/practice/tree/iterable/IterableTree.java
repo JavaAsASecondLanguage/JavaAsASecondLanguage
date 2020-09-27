@@ -4,12 +4,15 @@ import io.github.javaasasecondlanguage.lecture02.practice.tree.Tree;
 import io.github.javaasasecondlanguage.lecture02.practice.tree.TreeNode;
 
 import java.util.Iterator;
+import java.util.ArrayList;
 
 public class IterableTree
         implements Tree<Integer>, Iterable<Integer> {
 
+    protected TreeNode<Integer> root;
+
     public IterableTree(TreeNode<Integer> root) {
-        throw new RuntimeException("Not implemented");
+        this.root = root;
     }
 
     /**
@@ -25,12 +28,21 @@ public class IterableTree
      */
     @Override
     public Iterator<Integer> iterator() {
-        throw new RuntimeException("Not implemented");
+        var list = new ArrayList<Integer>();
+        list.add(root.element());
+        for (var child : root.getChildren()) {
+            var childTree = new IterableTree(child);
+            var childIter = childTree.iterator();
+            while (childIter.hasNext()) {
+                list.add(childIter.next());
+            }
+        }
+        return list.iterator();
     }
 
     @Override
     public TreeNode<Integer> getRoot() {
-        throw new RuntimeException("Not implemented");
+        return root;
     }
 }
 
