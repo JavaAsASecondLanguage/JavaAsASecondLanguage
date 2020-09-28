@@ -4,13 +4,18 @@ import io.github.javaasasecondlanguage.lecture02.practice.tree.Tree;
 import io.github.javaasasecondlanguage.lecture02.practice.tree.TreeNode;
 
 import java.util.Iterator;
+import java.util.Stack;
 
 public class IterableTree
         implements Tree<Integer>, Iterable<Integer> {
 
+    public TreeNode<Integer> root;
+
+    // constructor creates iterable tree
     public IterableTree(TreeNode<Integer> root) {
-        throw new RuntimeException("Not implemented");
+        this.root = root;
     }
+
 
     /**
      * Pre-order iterator
@@ -25,12 +30,21 @@ public class IterableTree
      */
     @Override
     public Iterator<Integer> iterator() {
-        throw new RuntimeException("Not implemented");
+        var stack = new Stack<Integer>();
+        stack.push(root.element());
+        for (var child : root.getChildren()) {
+            IterableTree subtree = new IterableTree(child);
+            Iterator<Integer> iterSubtree = subtree.iterator();
+            while (iterSubtree.hasNext()) {
+                stack.push(iterSubtree.next());
+            }
+        }
+        return stack.iterator();
     }
 
     @Override
     public TreeNode<Integer> getRoot() {
-        throw new RuntimeException("Not implemented");
+        return root;
     }
 }
 

@@ -10,6 +10,15 @@ public class QuantTreeImpl extends AbstractTree<Integer> implements QuantTree {
 
     @Override
     public int getMaxHeight() {
-        throw new RuntimeException("Not Implemented");
+        return getHeight(root);
+    }
+
+    public static int getHeight(TreeNode<Integer> node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + node.getChildren().stream()
+                .map(QuantTreeImpl::getHeight)
+                .max(Integer::compareTo).orElse(0); // why error ???
     }
 }

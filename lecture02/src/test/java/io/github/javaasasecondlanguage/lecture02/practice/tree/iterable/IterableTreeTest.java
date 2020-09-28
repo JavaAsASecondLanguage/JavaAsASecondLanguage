@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.StreamSupport;
 
-@Disabled
+//@Disabled
 class IterableTreeTest {
     IterableTree tree = new IterableTree(
             node(1,
