@@ -8,15 +8,14 @@ import java.util.concurrent.Executors;
 
 public class Application {
     public static void initDI() {
-        new Context()
-                .register(Map.of("/test", new MyHttpHandler()))
-                .register(new MyWebServer())
-                .register(8080, "port")
-                .register("localhost", "host")
-                .register(Executors.newFixedThreadPool(10))
-                .register(Map.of("/test", new MyHttpHandler()))
-                .register("Hello dear ", "welcomeText")
-                .register((Logger) System.out::println);
+        Context.getInstance()
+            .register(8080, "port")
+            .register("localhost", "host")
+            .register("Hello dear ", "welcomeText")
+            .register((Logger) System.out::println)
+            .register(Executors.newFixedThreadPool(10))
+            .register(Map.of("/test", new MyHttpHandler()))
+            .register(new MyWebServer());
     }
 
     public static void main(String[] args) {
