@@ -1,22 +1,36 @@
 package io.github.javaasasecondlanguage.lecture03.practice3;
 
+import java.util.HashMap;
+
 /**
  * Cache that only stores 'capacity' values that were put last
  */
-public class LRUCache {
+public class LRUCache<E> {
+
+    private int capacity;
+    HashMap<String, String> cache;
+
     public LRUCache(int capacity) {
-        throw new RuntimeException("Not implemented");
+        if (capacity < 0) {
+            throw new IllegalArgumentException();
+        }
+        this.capacity = capacity;
+        cache = new HashMap<>();
     }
 
     public String get(String key) {
-        throw new RuntimeException("Not implemented");
+        return cache.get(key);
     }
 
     public String put(String key, String value) {
-        throw new RuntimeException("Not implemented");
+        if (size() == capacity) {
+            String firstKey = cache.keySet().stream().findFirst().get();
+            cache.remove(firstKey);
+        }
+        return cache.put(key, value);
     }
 
-    public int size(){
-        throw new RuntimeException("Not implemented");
+    public int size() {
+        return cache.size();
     }
 }
