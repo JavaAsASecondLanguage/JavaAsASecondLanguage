@@ -1,13 +1,19 @@
 package io.github.javaasasecondlanguage.homework02.webserver;
 
 import io.github.javaasasecondlanguage.homework02.di.Context;
-import io.github.javaasasecondlanguage.homework02.di.Injector;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.concurrent.Executors;
 
-public class Application {
-    public static void initDI() {
+public class MyWebServerTests {
+
+    private MyWebServer webServer;
+
+    @BeforeEach
+    void setUp() {
         new Context()
                 .register("Hello dear ", "welcomeText")
                 .register(Map.of("/test", new MyHttpHandler()))
@@ -15,13 +21,13 @@ public class Application {
                 .register("localhost", "host")
                 .register(Executors.newFixedThreadPool(10))
                 .register(Map.of("/test", new MyHttpHandler()))
-                .register(new LoggerImpl())
-                .register(new MyWebServer());
+                .register(new LoggerImpl());
+        webServer = new MyWebServer();
     }
 
-    public static void main(String[] args) {
-        initDI();
-        var server = Injector.inject(WebServer.class);
-        server.start();
+    @Test
+    void testStartStop() {
+        Assertions.assertDoesNotThrow(webServer::start);
+        Assertions.assertDoesNotThrow(webServer::stop);
     }
 }
