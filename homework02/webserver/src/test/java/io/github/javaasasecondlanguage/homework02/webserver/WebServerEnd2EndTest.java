@@ -1,9 +1,6 @@
 package io.github.javaasasecondlanguage.homework02.webserver;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.net.URI;
@@ -15,6 +12,7 @@ import static io.github.javaasasecondlanguage.homework02.di.Injector.inject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Disabled
 public class WebServerEnd2EndTest {
     WebServer server = inject(WebServer.class);
     String host = inject(String.class, "host");
