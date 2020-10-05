@@ -6,10 +6,11 @@ plugins {
 
 tasks.withType<ShadowJar>() {
     manifest {
-        attributes["Main-Class"] = "io.github.javaasasecondlanguage.homework02.webserver.Server"
+        attributes["Main-Class"] = "io.github.javaasasecondlanguage.homework02.webserver.Application"
     }
 }
 
 dependencies {
     implementation(project(":di"))
+    implementation("org.slf4j:slf4j-log4j12:1.7.30")
 }

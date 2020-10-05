@@ -4,6 +4,8 @@ import com.sun.net.httpserver.HttpExchange;
 import io.github.javaasasecondlanguage.homework02.di.Context;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -22,7 +24,7 @@ public class MyHttpHandlerTest {
     static void setupAll() {
         new Context()
                 .register(welcomeText, "welcomeText")
-                .register((Logger) msg -> { });
+                .register(LoggerFactory.getLogger("test"));
     }
 
     @Test

@@ -2,6 +2,8 @@ package io.github.javaasasecondlanguage.homework02.webserver;
 
 import io.github.javaasasecondlanguage.homework02.di.Context;
 import io.github.javaasasecondlanguage.homework02.di.Injector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -14,7 +16,7 @@ public class Application {
                 .register("localhost", "host")
                 .register(Map.of("/test", new MyHttpHandler()))
                 .register(Executors.newFixedThreadPool(10))
-                .register((Logger) System.out::println)
+                .register(LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME))
                 .register(new MyWebServer());
     }
 
