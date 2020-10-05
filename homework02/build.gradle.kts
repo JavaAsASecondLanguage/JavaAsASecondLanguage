@@ -11,6 +11,7 @@ plugins {
 subprojects {
     apply(plugin = "java")
     apply(plugin = "checkstyle")
+    apply(plugin = "jacoco")
 
     java {
         sourceCompatibility = JavaVersion.VERSION_14
@@ -32,6 +33,7 @@ subprojects {
     dependencies {
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.3.1")
+        testImplementation("org.mockito:mockito-core:2.1.0")
     }
 
     checkstyle {
