@@ -21,7 +21,7 @@ public class WebServerEnd2EndTest {
     WebServer server = inject(WebServer.class);
     String host = inject(String.class, "host");
     int port = inject(Integer.class, "port");
-    
+
     @BeforeAll
     static void setupAll() {
         Application.initDI();

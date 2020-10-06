@@ -16,7 +16,7 @@ public class Application {
                 .register(() -> Executors.newFixedThreadPool(10))
                 .register(() -> Map.of("/test", new MyHttpHandler()))
                 .register(() -> "Hello dear ", "welcomeText")
-                .register(() -> (Logger) System.out::println)
+                .register(() -> new MyLogger())
                 .resolve();
     }
 
