@@ -10,7 +10,8 @@ import static io.github.javaasasecondlanguage.homework02.di.Injector.inject;
 
 public class MyHttpHandler implements HttpHandler {
     public static final Logger log = inject(Logger.class);
-    private String welcomeText = inject(String.class, "welcomeText");
+    private String welcomeText = inject("welcomeText");
+
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {

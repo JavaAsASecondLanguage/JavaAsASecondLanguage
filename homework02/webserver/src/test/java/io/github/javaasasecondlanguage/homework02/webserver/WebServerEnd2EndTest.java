@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WebServerEnd2EndTest {
     WebServer server = inject(WebServer.class);
-    String host = inject(String.class, "host");
-    int port = inject(Integer.class, "port");
+    String host = inject("host");
+    int port = inject("port");
 
     @BeforeAll
     static void setupAll() {
