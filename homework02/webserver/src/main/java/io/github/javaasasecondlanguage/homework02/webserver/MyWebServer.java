@@ -15,8 +15,8 @@ import static io.github.javaasasecondlanguage.homework02.di.Injector.inject;
  */
 public class MyWebServer implements WebServer {
     private static final Logger log = inject(Logger.class);
-    private String host = inject(String.class, "host");
-    private int port = inject(Integer.class, "port");
+    private String host = inject("host");
+    private int port = inject("port");
     private Executor executor = inject(Executor.class);
     private Map<String, HttpHandler> handlers = inject(Map.class);
 
@@ -26,7 +26,7 @@ public class MyWebServer implements WebServer {
         try {
             server = HttpServer.create(new InetSocketAddress(host, port), 0);
         } catch (IOException e) {
-            log.info("Oops " + e.getMessage());
+            log.warning("Oops " + e.getMessage());
         }
         server.setExecutor(executor);
         handlers.forEach(server::createContext);
@@ -34,13 +34,13 @@ public class MyWebServer implements WebServer {
 
     @Override
     public void start() {
-        log.info("Starting server");
+        log.warning("Starting server");
         server.start();
     }
 
     @Override
     public void stop() {
-        log.info("Stopping server");
+        log.warning("Stopping server");
         server.stop(0);
     }
 
