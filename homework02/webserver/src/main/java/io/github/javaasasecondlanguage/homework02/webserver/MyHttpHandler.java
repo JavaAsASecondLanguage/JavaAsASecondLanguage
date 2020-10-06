@@ -2,6 +2,7 @@ package io.github.javaasasecondlanguage.homework02.webserver;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import io.github.javaasasecondlanguage.homework02.di.Context;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -9,8 +10,14 @@ import java.io.OutputStream;
 import static io.github.javaasasecondlanguage.homework02.di.Injector.inject;
 
 public class MyHttpHandler implements HttpHandler {
-    public static final Logger log = inject(Logger.class);
+    public static Logger log; // TODO: final
     private String welcomeText = inject(String.class, "welcomeText");
+
+    public MyHttpHandler() {
+        if (log == null) {
+            log = inject(Logger.class);
+        }
+    }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {

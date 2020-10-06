@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ContextTest {
-    private Context context = Context.getInstance();
+    private Context context = new Context();
 
     @BeforeEach
     void setup() {
@@ -18,15 +18,17 @@ public class ContextTest {
     @Test
     void registerAndFindWithQualifier() {
         var str = "Some value";
-        context.register(str, "key1");
-        context.register(8080, "key2");
-        context.register(22, "key3");
-        context.register(653, "key3");
+        context.register(() -> str, "key1");
+        context.register(() -> 8080, "key2");
+        context.register(() -> 22, "key3");
+        context.register(() -> 653, "key3");
+        context.resolve();
 
         assertEquals(str, context.findByQualifier("key1"));
         assertEquals(8080, context.findByQualifier("key2"));
         assertEquals(653, context.findByQualifier("key3"));
-        assertEquals(null, context.findByQualifier("key99"));
+
+        assertThrows(Context.UnresolvableDepsError.class, () -> context.findByQualifier("key99"));
     }
 
     @Test
@@ -40,8 +42,9 @@ public class ContextTest {
         list.add(2);
         list.add(3);
 
-        context.register(map);
-        context.register(list);
+        context.register(() -> map);
+        context.register(() -> list);
+        context.resolve();
 
         assertEquals(map, context.findByClass(map.getClass()));
         assertEquals(map, context.findByClass(HashMap.class));
@@ -53,6 +56,7 @@ public class ContextTest {
         assertEquals(list, context.findByClass(AbstractList.class));
         assertEquals(list, context.findByClass(List.class));
         assertEquals(list, context.findByClass(Collection.class));
-        assertEquals(list, context.findByClass(Iterable.class));
+
+        assertThrows(Context.UnresolvableDepsError.class, () -> context.findByClass(LinkedList.class));
     }
 }

@@ -1,15 +1,13 @@
 package io.github.javaasasecondlanguage.homework02.di;
 
-import io.github.javaasasecondlanguage.homework02.di.Context;
-
 public class Injector {
+    private static Context context = new Context();
+
     public static <T> T inject(Class<T> clazz) {
-        var context = Context.getInstance();
         return (T)context.findByClass(clazz);
     }
 
     public static <T> T inject(Class<T> clazz, String qualifier) {
-        var context = Context.getInstance();
-        return (T)context.findByQualifier(qualifier);
+        return (T) context.findByQualifier(qualifier);
     }
 }
