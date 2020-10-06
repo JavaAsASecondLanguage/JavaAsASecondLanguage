@@ -6,11 +6,13 @@ version = "1.0-SNAPSHOT"
 plugins {
     java
     checkstyle
+    jacoco
 }
 
 subprojects {
     apply(plugin = "java")
     apply(plugin = "checkstyle")
+    apply(plugin = "jacoco")
 
     java {
         sourceCompatibility = JavaVersion.VERSION_14
@@ -25,6 +27,14 @@ subprojects {
         useJUnitPlatform()
         jvmArgs("--enable-preview")
     }
+
+    tasks.test {
+        finalizedBy.getDependencies(tasks["jacocoTestReport"])
+    }
+    tasks.jacocoTestReport {
+        dependsOn.add(tasks["test"])
+    }
+
     repositories {
         mavenCentral()
     }
