@@ -2,10 +2,10 @@ package io.github.javaasasecondlanguage.homework02.di;
 
 public class Injector {
     public static <T> T inject(Class<T> clazz) {
-        throw new RuntimeException("Not implemented");
+        return ContextRegistry.getContext().getBean(clazz);
     }
 
     public static <T> T inject(Class<T> clazz, String qualifier) {
-        throw new RuntimeException("Not implemented");
+        return ContextRegistry.getContext().getBean(clazz, qualifier);
     }
 }
