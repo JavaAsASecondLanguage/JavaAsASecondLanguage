@@ -24,6 +24,7 @@ jobs:
         working-directory: ./homework02
       - name: check DI module
         run: ./gradlew :di:check
+        working-directory: ./homework02
       - name: check Webserver module
         run: ./gradlew :webserver:check
         working-directory: ./homework02
