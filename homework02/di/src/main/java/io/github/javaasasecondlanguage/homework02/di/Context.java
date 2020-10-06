@@ -22,6 +22,13 @@ public class Context {
         this.dependencies = new HashMap<>();
     }
 
+    /**
+     * Add dependency to map
+     *
+     * @param clazz object class
+     * @param obj registered dependency
+     * @param qualifier qualifier of dependency
+     */
     void createInjection(Class<?> clazz, Object obj, String qualifier) {
         HashMap<String, Object> node = null;
 
@@ -39,9 +46,7 @@ public class Context {
         if (node.containsKey(qualifier)) {
             throw new KeyAlreadyExistsException();
         }
-
         node.put(qualifier, obj);
-
     }
 
     /**
@@ -77,6 +82,13 @@ public class Context {
         return register(object, null);
     }
 
+    /**
+     * Find dependency in map
+     *
+     * @param clazz object class
+     * @param qualifier qualifier of dependency
+     * @return object to injected class
+     */
     public <T> T findDependency(Class<T> clazz, String qualifier) {
         HashMap<String, Object> dependency = this.dependencies.get(clazz);
         T object = null;
@@ -87,6 +99,11 @@ public class Context {
         return object;
     }
 
+    /**
+     * Get unique class
+     *
+     * @return singleton
+     */
     public static Context getSingleton() {
         return singleton;
     }

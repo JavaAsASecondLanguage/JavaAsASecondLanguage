@@ -14,16 +14,12 @@ public class MyWebServerTest {
     @BeforeEach
     void setUp() {
         new Context()
-                .register("Hello dear ", "welcomeText")
-                .register(Map.of("/test", new MyHttpHandler()))
-                //.register(new MyWebServer())
-                .register(8080, "port")
+                .register(5000, "port")
                 .register("localhost", "host")
-                .register(Executors.newFixedThreadPool(10))
+                .register("Hello dear ", "welcomeText")
+                .register(new LoggerImpl())
                 .register(Map.of("/test", new MyHttpHandler()))
-                //.register("Hello dear ", "welcomeText")
-                //.register((Logger) System.out::println);
-                .register(new LoggerImpl());
+                .register(Executors.newFixedThreadPool(10));
         webServer = new MyWebServer();
     }
 

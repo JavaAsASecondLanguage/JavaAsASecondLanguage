@@ -53,7 +53,7 @@ public class WebServerEnd2EndTest {
         assertEquals(200, response.statusCode());
         assertTrue(response.body().contains("Hello dear TEST_NAME"));
 
-
+        // add test for POST
         final HttpClient client2 = HttpClient.newHttpClient();
         final HttpRequest request2 = HttpRequest.newBuilder()
                 .POST(new HttpRequest.BodyPublisher() {
