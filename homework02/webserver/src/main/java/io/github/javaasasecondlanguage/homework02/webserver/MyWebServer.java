@@ -24,6 +24,7 @@ public class MyWebServer implements WebServer {
 
     public MyWebServer() {
         try {
+            // instantiate server on host, port. 0 back logging
             server = HttpServer.create(new InetSocketAddress(host, port), 0);
         } catch (IOException e) {
             log.info("Oops " + e.getMessage());

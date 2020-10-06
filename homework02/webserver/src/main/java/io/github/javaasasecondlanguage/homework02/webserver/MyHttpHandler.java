@@ -26,6 +26,7 @@ public class MyHttpHandler implements HttpHandler {
     }
 
     private String handleGetRequest(HttpExchange httpExchange) {
+        // extract request param value from URI. Handle 1 param present
         return httpExchange.getRequestURI()
                 .toString()
                 .split("\\?")[1]
@@ -34,7 +35,9 @@ public class MyHttpHandler implements HttpHandler {
 
     private void handleResponse(HttpExchange httpExchange, String requestParamValue)
             throws IOException {
+        // send response back to client
 
+        // get output stream
         OutputStream outputStream = httpExchange.getResponseBody();
         StringBuilder htmlBuilder = new StringBuilder();
 
@@ -46,6 +49,7 @@ public class MyHttpHandler implements HttpHandler {
                 .append("</h1>")
                 .append("</body>")
                 .append("</html>");
+        // response can be seen by http://localhost:8001/test?name=sam
         String htmlResponse = htmlBuilder.toString();
         // this line is a must
         httpExchange.sendResponseHeaders(200, htmlResponse.length());
