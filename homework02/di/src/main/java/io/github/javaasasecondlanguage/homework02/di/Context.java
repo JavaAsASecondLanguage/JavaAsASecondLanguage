@@ -37,18 +37,18 @@ public class Context {
     }
 
     public void resolve() {
-        var prev_size = procs.size();
+        var prevSize = procs.size();
 
-        while (prev_size > 0) {
+        while (prevSize > 0) {
             resolutionStep();
-            if (procs.size() == prev_size) {
+            if (procs.size() == prevSize) {
                 var names = procs.stream()
                         .map((p) -> p.qualifier).filter((s) -> s != null)
                         .collect(Collectors.toList());
                 throw new UnresolvableDepsError(String.join(", ", names));
             }
 
-            prev_size = procs.size();
+            prevSize = procs.size();
         }
     }
 

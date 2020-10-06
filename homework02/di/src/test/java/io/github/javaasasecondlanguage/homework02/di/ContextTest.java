@@ -57,6 +57,9 @@ public class ContextTest {
         assertEquals(list, context.findByClass(List.class));
         assertEquals(list, context.findByClass(Collection.class));
 
-        assertThrows(Context.UnresolvableDepsError.class, () -> context.findByClass(LinkedList.class));
+        assertThrows(
+            Context.UnresolvableDepsError.class,
+            () -> context.findByClass(LinkedList.class)
+        );
     }
 }

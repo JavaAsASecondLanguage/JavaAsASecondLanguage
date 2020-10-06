@@ -26,12 +26,12 @@ public class InjectorTest {
         context.resolve();
 
         assertEquals(str, Injector.inject(String.class, "key1"));
-        assertEquals((int)8080, (int)Injector.inject(Integer.class, "key2"));
-        assertEquals((int)653, (int)Injector.inject(Integer.class, "key3"));
+        assertEquals((int) 8080, (int) Injector.inject(Integer.class, "key2"));
+        assertEquals((int) 653, (int) Injector.inject(Integer.class, "key3"));
 
         assertThrows(
-                Context.UnresolvableDepsError.class,
-                () -> Injector.inject(String.class, "key99")
+            Context.UnresolvableDepsError.class,
+            () -> Injector.inject(String.class, "key99")
         );
     }
 
@@ -62,8 +62,8 @@ public class InjectorTest {
         assertEquals(list, Injector.inject(Collection.class));
 
         assertThrows(
-                Context.UnresolvableDepsError.class,
-                () -> Injector.inject(LinkedList.class)
+            Context.UnresolvableDepsError.class,
+            () -> Injector.inject(LinkedList.class)
         );
     }
 }
