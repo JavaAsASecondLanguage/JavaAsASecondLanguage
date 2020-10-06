@@ -9,13 +9,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestDI {
     private Context context;
+
     @BeforeEach
     void setUp() {
         context = new Context();
     }
 
     @Test
-    void duplicateClassesLabels(){
+    void duplicateClassesLabels() {
         int registeredValue1 = 123;
         int registeredValue2 = 456;
         String registeredQualifier = "aaa";
@@ -25,7 +26,7 @@ public class TestDI {
     }
 
     @Test
-    void duplicateClassesWithoutLabels(){
+    void duplicateClassesWithoutLabels() {
         int registeredValue1 = 123;
         int registeredValue2 = 456;
         assertThrows(KeyAlreadyExistsException.class, () -> context
@@ -34,7 +35,7 @@ public class TestDI {
     }
 
     @Test
-    void sameClassesDiffLabels(){
+    void sameClassesDiffLabels() {
         int registeredValue1 = 123;
         int registeredValue2 = 456;
         String registeredQualifier1 = "aaa";
@@ -45,7 +46,7 @@ public class TestDI {
     }
 
     @Test
-    void diffClassesSameLabels(){
+    void diffClassesSameLabels() {
         int registeredValue1 = 123;
         String registeredValue2 = "456";
         String registeredQualifier = "aaa";
