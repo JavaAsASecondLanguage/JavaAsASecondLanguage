@@ -8,7 +8,6 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Disabled
 public class ChatClientTest {
     private static final String MY_NAME_IN_CHAT = "I_CAN_COPY_PASTE";
     private static final String MY_MESSAGE_TO_CHAT = "SOMEONE_KILL_ME";
