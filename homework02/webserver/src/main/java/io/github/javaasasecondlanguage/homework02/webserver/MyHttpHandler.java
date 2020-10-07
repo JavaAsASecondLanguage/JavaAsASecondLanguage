@@ -7,19 +7,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import static io.github.javaasasecondlanguage.homework02.di.Injector.inject;
+import io.github.javaasasecondlanguage.homework02.webserver.Logger.LogLevel;
 
 public class MyHttpHandler implements HttpHandler {
     public static final Logger log = inject(Logger.class);
+    private final LogLevel httpRequestLogLevel =
+        inject(LogLevel.class, "httpRequestLogLevel");
+    private final LogLevel httpErrorLogLevel =
+        inject(LogLevel.class, "httpErrorLogLevel");
     private String welcomeText = inject(String.class, "welcomeText");
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         var requestMethod = httpExchange.getRequestMethod();
         log.info("Received " + requestMethod  + "request");
+        log.info(httpRequestLogLevel, "Received " + requestMethod  + " request");
 
         String requestParamValue = switch (requestMethod) {
             case "GET" -> handleGetRequest(httpExchange);
-            default -> throw new RuntimeException("not supported");
+            default -> {
+                log.info(httpErrorLogLevel, "method " + requestMethod + " not supported");
+                throw new RuntimeException("not supported");
+            }
         };
 
         handleResponse(httpExchange, requestParamValue);
