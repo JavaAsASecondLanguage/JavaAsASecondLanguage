@@ -11,7 +11,7 @@ import java.net.http.HttpResponse;
 public class ChatClient {
     private static final HttpClient client = HttpClient.newHttpClient();
     private static final String PROTOCOL = "http://";
-    private static final String HOST = "3.236.217.35";//change to 3.236.217.35 for practice 1
+    private static final String HOST = "3.236.217.35";
     private static final String PORT = ":8080";
 
     //POST host:port/chat/login?name=my_name
