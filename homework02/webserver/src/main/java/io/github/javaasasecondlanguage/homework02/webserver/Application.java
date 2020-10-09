@@ -8,15 +8,17 @@ import java.util.concurrent.Executors;
 
 public class Application {
     public static void initDI() {
-        Context.getContext()
-                .register(() -> (Object) Map.of("/test", new MyHttpHandler()))
-                .register(() -> (Object) new MyWebServer())
-                .register(() -> 8080, "port")
-                .register(() -> "localhost", "host")
-                .register(() -> Executors.newFixedThreadPool(10))
-                .register(() -> (Object) Map.of("/test", new MyHttpHandler()))
-                .register(() -> "Hello dear ", "welcomeText")
-                .register(() -> (Object) (Logger) System.out::println);
+        Context.getRoot().openScope("MyWebServer")
+            .register(Map.class, () -> Map.of("/test", new MyHttpHandler()))
+            .register(MyWebServer.class)
+            .register(8080, "port")
+            .register("localhost", "host")
+            .register(Executors.newFixedThreadPool(10))
+            .register(Map.class, () -> Map.of("/test", new MyHttpHandler()))
+            .register("Hello dear ", "welcomeText")
+            .register(MyLogger.class)
+            .register(Logger.class, () -> (Logger) System.out::println);
+        Injector.setResolutionScope("MyWebServer");
     }
 
     public static void main(String[] args) {

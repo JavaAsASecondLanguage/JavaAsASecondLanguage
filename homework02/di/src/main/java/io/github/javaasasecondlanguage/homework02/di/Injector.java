@@ -1,14 +1,17 @@
 package io.github.javaasasecondlanguage.homework02.di;
 
-import io.github.javaasasecondlanguage.homework02.di.Context;
-
 public class Injector {
+    private static Context resolutionScope = Context.getRoot();
+
+    public static void setResolutionScope(String name) {
+        resolutionScope = Context.getResolutionScope(name);
+    }
 
     public static <T> T inject(Class<T> clazz) {
-        return Context.getContext().tryResolve(clazz);
+        return resolutionScope.resolve(clazz);
     }
 
     public static <T> T inject(Class<T> clazz, String qualifier) {
-        return Context.getContext().tryResolve(clazz, qualifier);
+        return resolutionScope.resolve(clazz, qualifier);
     }
 }
