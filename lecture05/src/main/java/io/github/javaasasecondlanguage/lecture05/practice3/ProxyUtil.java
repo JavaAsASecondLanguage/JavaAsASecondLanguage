@@ -16,6 +16,12 @@ public class ProxyUtil {
     }
 
     static <K, V> Map<K, V> wrap(Map<K, V> original) {
-        throw new RuntimeException("Not implemented");
+        var handler = new Handler(original);
+        var proxy = Proxy.newProxyInstance(
+                Map.class.getClassLoader(),
+                new Class[]{Map.class},
+                handler
+        );
+        return (Map<K, V>) proxy;
     }
 }
