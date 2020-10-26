@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
 public class ApiController {
 
     private final FlitService flitService;
@@ -26,12 +25,11 @@ public class ApiController {
     }
 
     @DeleteMapping(
-            path = "/clear",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+            path = "/clear")
     ResponseEntity<?> clear() {
         flitService.clear();
         userService.clear();
         subscriptionService.clear();
-        return BaseResponse.empty();
+        return BaseResponse.ok();
     }
 }

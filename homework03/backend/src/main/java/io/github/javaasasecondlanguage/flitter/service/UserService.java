@@ -17,6 +17,4 @@ public interface UserService {
 
     User getUserByName(String username);
 
-    List<User> getListByNames(Set<String> tokens);
-
 }

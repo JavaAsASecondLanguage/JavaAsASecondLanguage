@@ -22,13 +22,13 @@ public class BaseResponse<T> {
         return ResponseEntity.ok(response);
     }
 
-    public static <T> ResponseEntity<BaseResponse<T>> empty() {
+    public static <T> ResponseEntity<BaseResponse<T>> ok() {
         return ok(null);
     }
 
-    public static <T> ResponseEntity<BaseResponse<T>> created(T data) {
-        var response = new BaseResponse<T>(data, null);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public static ResponseEntity<?> error(String errorMessage) {
+        var response = new BaseResponse<Object>(null, errorMessage);
+        return ResponseEntity.ok(response);
     }
 
     public static ResponseEntity<?> badRequest() {
@@ -37,12 +37,12 @@ public class BaseResponse<T> {
     }
 
     public static ResponseEntity<?> notFound(String msg) {
-        var response = new BaseResponse<Object>(null,msg + " not found");
+        var response = new BaseResponse<Object>(null, msg);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
-    public static ResponseEntity<?> alreadyExists() {
-        var response = new BaseResponse<Object>(null,"This name is already taken");
+    public static ResponseEntity<?> alreadyExists(String msg) {
+        var response = new BaseResponse<Object>(null, msg);
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 

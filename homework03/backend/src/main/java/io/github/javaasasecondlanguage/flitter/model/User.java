@@ -5,11 +5,6 @@ public class User {
     private String userToken;
     private String userName;
 
-    public User(String userToken, String userName) {
-        this.userToken = userToken;
-        this.userName = userName;
-    }
-
     public String getUserToken() {
         return userToken;
     }

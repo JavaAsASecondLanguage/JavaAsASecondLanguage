@@ -1,6 +1,10 @@
-package io.github.javaasasecondlanguage.flitter.service;
+package io.github.javaasasecondlanguage.flitter.service.impl;
 
 import io.github.javaasasecondlanguage.flitter.model.Flit;
+import io.github.javaasasecondlanguage.flitter.model.User;
+import io.github.javaasasecondlanguage.flitter.service.FlitService;
+import io.github.javaasasecondlanguage.flitter.service.SubscriptionService;
+import io.github.javaasasecondlanguage.flitter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,11 +21,13 @@ public class FlitServiceImpl implements FlitService {
     private final Map<String, Flit> repository;
 
     private final UserService userService;
+    private final SubscriptionService subscriptionService;
 
     @Autowired
-    public FlitServiceImpl(Map<String, Flit> repository, UserService userService) {
+    public FlitServiceImpl(Map<String, Flit> repository, UserService userService, SubscriptionService subscriptionService) {
         this.repository = repository;
         this.userService = userService;
+        this.subscriptionService = subscriptionService;
     }
 
     @Override
@@ -30,33 +36,34 @@ public class FlitServiceImpl implements FlitService {
     }
 
     @Override
-    public Flit create(Flit flit) {
-        var authUser = userService.getUserByToken(flit.getUserToken());
+    public Flit create(User authUser, Flit flit) {
         flit.setId(UUID.randomUUID().toString());
-        flit.setUserName(authUser.getUserToken());
-        return repository.put(flit.getId(), flit);
+        flit.setUserName(authUser.getUserName());
+        repository.put(flit.getId(), flit);
+        return flit;
     }
 
     @Override
     public List<Flit> getLastFlits(int i) {
         return repository.values().stream()
+                .skip(Math.max(0, repository.size() - i))
                 .limit(i)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Flit> getFlitsByUserName(String username) {
+    public List<Flit> getFlitsByPublisherName(String username) {
         var user = userService.getUserByName(username);
         return repository.values().stream()
-                .filter(x -> x.getUserName().equals(user.getUserToken()))
+                .filter(x -> x.getUserName().equals(user.getUserName()))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Flit> getFlitsByUserToken(String userToken) {
-        var authUser = userService.getUserByToken(userToken);
+    public List<Flit> getFlitsBySubscriber(User authUser) {
+        var publisherNames = subscriptionService.findPublisherNames(authUser);
         return repository.values().stream()
-                .filter(x -> authUser.getUserToken().equals(userToken))
+                .filter(x -> publisherNames.contains(x.getUserName()))
                 .collect(Collectors.toList());
     }
 }

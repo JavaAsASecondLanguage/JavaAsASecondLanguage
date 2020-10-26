@@ -1,7 +1,9 @@
-package io.github.javaasasecondlanguage.flitter.service;
+package io.github.javaasasecondlanguage.flitter.service.impl;
 
 import io.github.javaasasecondlanguage.flitter.model.Subscription;
 import io.github.javaasasecondlanguage.flitter.model.User;
+import io.github.javaasasecondlanguage.flitter.service.SubscriptionService;
+import io.github.javaasasecondlanguage.flitter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class SubscriptionServiceImpl implements SubscriptionService{
+public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Qualifier("subscriptionRepository")
     Map<String, Subscription> repository;
@@ -32,16 +34,15 @@ public class SubscriptionServiceImpl implements SubscriptionService{
     }
 
     @Override
-    public Subscription create(Subscription subscription) {
-        var authUser = userService.getUserByToken(subscription.getSubscriberToken());
+    public Subscription create(User authUser, Subscription subscription) {
         subscription.setId(UUID.randomUUID().toString());
         subscription.setSubscriberName(authUser.getUserName());
-        return repository.put(subscription.getId(), subscription);
+        repository.put(subscription.getId(), subscription);
+        return subscription;
     }
 
     @Override
-    public Subscription remove(Subscription subscription) {
-        var authUser = userService.getUserByToken(subscription.getSubscriberToken());
+    public Subscription remove(User authUser, Subscription subscription) {
         var subscriptionToRemove = repository.values().stream()
                 .filter(x ->
                         (authUser.getUserName().equals(x.getSubscriberName()) &&
@@ -51,22 +52,18 @@ public class SubscriptionServiceImpl implements SubscriptionService{
     }
 
     @Override
-    public List<User> findSubscribers(String userToken) {
-        return userService.getListByNames(
-                repository.values().stream()
-                        .map(x -> x.getPublisherName())
-                        .filter(x -> equals(userToken))
-                        .collect(Collectors.toSet())
-        );
+    public List<String> findSubscriberNames(User authUser) {
+        return repository.values().stream()
+                .filter(x -> x.getPublisherName().equals(authUser.getUserName()))
+                .map(x -> x.getSubscriberName())
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<User> findPublishers(String userToken) {
-        return userService.getListByNames(
-                repository.values().stream()
-                        .map(x -> x.getSubscriberName())
-                        .filter(x -> equals(userToken))
-                        .collect(Collectors.toSet())
-        );
+    public List<String> findPublisherNames(User authUser) {
+        return repository.values().stream()
+                .filter(x -> x.getSubscriberName().equals(authUser.getUserName()))
+                .map(x -> x.getPublisherName())
+                .collect(Collectors.toList());
     }
 }

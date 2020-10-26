@@ -7,16 +7,7 @@ public class Flit {
     @JsonIgnore
     private String id;
     private String userName;
-    @JsonIgnore
-    private String userToken;
-    private String flitContent;
-
-    public Flit(String id, String userName, String userToken, String flitContent) {
-        this.id = id;
-        this.userName = userName;
-        this.userToken = userToken;
-        this.flitContent = flitContent;
-    }
+    private String content;
 
     public String getId() {
         return id;
@@ -34,19 +25,13 @@ public class Flit {
         this.userName = userName;
     }
 
-    public String getFlitContent() {
-        return flitContent;
+    public String getContent() {
+        return content;
     }
 
-    public void setFlitContent(String flitContent) {
-        this.flitContent = flitContent;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getUserToken() {
-        return userToken;
-    }
 
-    public void setUserToken(String userToken) {
-        this.userToken = userToken;
-    }
 }

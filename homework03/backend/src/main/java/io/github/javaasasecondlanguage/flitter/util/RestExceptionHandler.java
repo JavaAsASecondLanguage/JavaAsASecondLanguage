@@ -13,16 +13,16 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<?> wrongRequest(HttpServletRequest req, NoHandlerFoundException e) throws Exception {
-        return BaseResponse.badRequest();
+        return BaseResponse.error("Bad request");
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<?> applicationErrorHandler(HttpServletRequest req, NotFoundException appEx) throws Exception {
-        return BaseResponse.notFound(appEx.getMessage());
+    public ResponseEntity<?> applicationErrorHandler(HttpServletRequest req, NotFoundException e) throws Exception {
+        return BaseResponse.notFound(e.getMessage());
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<?> defaultErrorHandler(HttpServletRequest req, AlreadyExistsException e) throws Exception {
-        return BaseResponse.alreadyExists();
+        return BaseResponse.alreadyExists(e.getMessage());
     }
 }

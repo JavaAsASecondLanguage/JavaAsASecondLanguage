@@ -9,11 +9,11 @@ public interface SubscriptionService {
 
     void clear();
 
-    Subscription create(Subscription subscription);
+    Subscription create(User authUser, Subscription subscription);
 
-    Subscription remove(Subscription subscription);
+    Subscription remove(User authUser, Subscription subscription);
 
-    List<User> findSubscribers(String userToken);
+    List<String> findSubscriberNames(User authUser);
 
-    List<User> findPublishers(String userToken);
+    List<String> findPublisherNames(User authUser);
 }

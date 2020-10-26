@@ -1,6 +1,8 @@
-package io.github.javaasasecondlanguage.flitter.service;
+package io.github.javaasasecondlanguage.flitter.service.impl;
 
 import io.github.javaasasecondlanguage.flitter.model.User;
+import io.github.javaasasecondlanguage.flitter.service.UserService;
+import io.github.javaasasecondlanguage.flitter.util.NotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -42,12 +44,11 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-    //todo: исправить
     @Override
     public User getUserByToken(String userToken) {
-        return checkNotFound(repository.values().stream()
+        return repository.values().stream()
                 .filter(x -> x.getUserToken().equals(userToken))
-                .findFirst().get(), "User");
+                .findFirst().orElseThrow(() -> new NotFoundException("User"));
     }
 
     @Override
@@ -55,10 +56,4 @@ public class UserServiceImpl implements UserService {
         return checkNotFound(repository.get(username), "User");
     }
 
-    @Override
-    public List<User> getListByNames(Set<String> names) {
-        return repository.values().stream()
-                .filter(x -> names.contains(x))
-                .collect(Collectors.toList());
-    }
 }

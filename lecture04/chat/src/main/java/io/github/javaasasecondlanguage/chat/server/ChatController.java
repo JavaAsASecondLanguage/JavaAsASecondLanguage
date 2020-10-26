@@ -61,15 +61,42 @@ public class ChatController {
     /**
      * curl -X POST -i localhost:8080/chat/logout -d "name=I_CAN_COPY_PASTE"
      */
-    //TODO
+    @RequestMapping(
+            path = "logout",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> logout(@RequestParam("name") String name) {
+        usersOnline.remove(name);
+        messages.add("[" + name + "] logged out");
+        return ResponseEntity.ok().build();
+    }
 
     /**
      * curl -X POST -i localhost:8080/chat/say -d "name=I_CAN_COPY_PASTE&msg=Hello"
      */
-    //TODO
+    @RequestMapping(
+            path = "say",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> say(@RequestParam("name") String name, @RequestParam("msg") String msg) {
+        usersOnline.remove(name);
+        messages.add("[" + name + "] said [" + msg);
+        return ResponseEntity.ok().build();
+    }
 
     /**
      * curl -i localhost:8080/chat/chat
      */
-    //TODO
+    @RequestMapping(
+            path = "chat",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> chat(@RequestParam("name") String name, @RequestParam("msg") String msg) {
+        usersOnline.remove(name);
+        messages.add("[" + name + "] said [" + msg);
+        return ResponseEntity.ok().build();
+    }
 }

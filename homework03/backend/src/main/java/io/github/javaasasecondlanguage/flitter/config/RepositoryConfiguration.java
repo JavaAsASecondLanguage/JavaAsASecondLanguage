@@ -1,4 +1,4 @@
-package io.github.javaasasecondlanguage.flitter;
+package io.github.javaasasecondlanguage.flitter.config;
 
 import io.github.javaasasecondlanguage.flitter.model.Flit;
 import io.github.javaasasecondlanguage.flitter.model.Subscription;
