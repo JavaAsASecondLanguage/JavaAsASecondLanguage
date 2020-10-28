@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Java. Lecture 6</title>
+
+        <link rel="stylesheet" href="../../reveal.js/dist/reset.css">
+        <link rel="stylesheet" href="../../reveal.js/dist/reveal.css">
+        <link rel="stylesheet" href="../../reveal.js/dist/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../../reveal.js/plugin/title-footer/title-footer.css">
+
+        <!-- Theme used for syntax highlighted code -->
+        <link rel="stylesheet" href="../../reveal.js/plugin/highlight/monokai.css" id="highlight-theme">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section data-markdown="lecture07.md"
+                         data-separator="^---"
+                         data-separator-vertical="^\^\^\^"
+                         data-separator-notes="^Note:"
+                />
+            </div>
+        </div>
+
+        <script src="../../reveal.js/dist/reveal.js"></script>
+        <script src="../../reveal.js/plugin/title-footer/title-footer.js"></script>
+        <script type="module">
+            // More info about initialization & config:
+            // - https://revealjs.com/initialization/
+            // - https://revealjs.com/config/
+            import Markdown from '../../reveal.js/plugin/markdown/markdown.esm.js';
+            import Highlight from '../../reveal.js/plugin/highlight/highlight.esm.js';
+            import Notes from '../../reveal.js/plugin/notes/notes.esm.js';
+
+            Reveal.initialize({
+                hash: true,
+                slideNumber: 'c/t',
+                plugins: [
+                    Markdown,
+                    Highlight,
+                    Notes,
+                ],
+                dependencies: [
+                    {
+                        src: 'plugin/title-footer/title-footer.js',
+                        async: true,
+                        callback: function() { title_footer.initialize(); }
+                    }
+                ]
+            });
+        </script>
+    </body>
+</html>

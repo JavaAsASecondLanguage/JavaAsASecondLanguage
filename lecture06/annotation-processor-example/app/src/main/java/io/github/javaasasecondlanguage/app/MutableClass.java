@@ -9,5 +9,4 @@ public class MutableClass {
     private final List<String> strs = null;
     public final int anInt = 42;
     private final String string = "42";
-
 }

@@ -21,8 +21,8 @@ jobs:
           java-version: '14.0.2'
       - name: assemble
         run: ./gradlew assemble
-        working-directory: ./lecture05
+        working-directory: ./lecture07
       - name: check
         run: ./gradlew check
-        working-directory: ./lecture05
+        working-directory: ./lecture07
 
