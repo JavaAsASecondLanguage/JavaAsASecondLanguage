@@ -21,8 +21,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.3.4.RELEASE") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
-//    Uncomment this dependency in order to include frontend files to your app
-//    runtimeOnly(project(":frontend"))
+    runtimeOnly(files("../frontend-1.0-SNAPSHOT.jar"))
 }
 
 tasks.test {
