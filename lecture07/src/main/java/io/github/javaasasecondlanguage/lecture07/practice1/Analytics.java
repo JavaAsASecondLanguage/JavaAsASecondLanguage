@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,10 +13,10 @@ import java.util.stream.IntStream;
 
 
 public class Analytics {
-    private static final int MAX_DEEP_AI_REQUESTS = 10000;
+    private static final int MAX_DEEP_AI_REQUESTS = 100;
     private static final int HACKER_NEWS_TIMEOUT = 10;
     private static final int DEEP_AI_TIMEOUT = 10;
-    private static final int MAX_DEEP_AI_ERROR_COUNT = 10000;
+    private static final int MAX_DEEP_AI_ERROR_COUNT = MAX_DEEP_AI_REQUESTS;
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final Queue<Integer> contentIdsQueue = new ConcurrentLinkedQueue<>();
     private final Queue<String> sentenceQueue = new ConcurrentLinkedQueue<>();
@@ -51,11 +48,12 @@ public class Analytics {
                     Executors.newFixedThreadPool(threadsNumber);
 
             executorService.submit(this::loadContent);
+            List<Future<?>> scoreLoadFutures = new ArrayList<>();
             for (int i = 0; i < threadsNumber; i++) {
-                executorService.submit(this::loadScores);
+                scoreLoadFutures.add(executorService.submit(this::loadScores));
             }
 
-            while (deepAiRequestCount.get() < MAX_DEEP_AI_REQUESTS) {
+            while (scoreLoadFutures.stream().anyMatch(f -> !f.isDone())) {
                 Thread.sleep(1000);
             }
         } catch (Exception e) {
@@ -111,13 +109,14 @@ public class Analytics {
                 Thread.sleep(DEEP_AI_TIMEOUT);
             } catch (NoSuchElementException e) {
                 logger.info("Sentence queue is empty");
+                errorCount++;
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error on sentence scoring", e);
                 errorCount++;
-                if (errorCount > MAX_DEEP_AI_ERROR_COUNT) {
-                    logger.severe("Too many errors");
-                    return;
-                }
+            }
+            if (errorCount > MAX_DEEP_AI_ERROR_COUNT) {
+                logger.severe("Too many errors");
+                return;
             }
         }
     }
