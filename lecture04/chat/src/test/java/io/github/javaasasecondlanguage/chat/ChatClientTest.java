@@ -1,7 +1,6 @@
 package io.github.javaasasecondlanguage.chat;
 
 import io.github.javaasasecondlanguage.chat.client.ChatClient;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
