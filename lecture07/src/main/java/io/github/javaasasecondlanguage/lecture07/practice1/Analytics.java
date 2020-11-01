@@ -40,17 +40,18 @@ public class Analytics {
         }
         try {
             int maxContentId = Integer.parseInt(HackerNewsClient.getLatestContentId());
-            logger.info(String.format("Max content id is %d. Loading last %d contents", maxContentId, MAX_DEEP_AI_REQUESTS));
+            logger.info(String.format("Max content id is %d. Loading last %d contents",
+                    maxContentId, MAX_DEEP_AI_REQUESTS));
             contentIdsQueue.addAll(IntStream
                     .range(maxContentId - MAX_DEEP_AI_REQUESTS + 1, maxContentId + 1)
                     .boxed()
                     .collect(Collectors.toSet()));
-            int nThreads = Runtime.getRuntime().availableProcessors();
+            int threadsNumber = Runtime.getRuntime().availableProcessors();
             ExecutorService executorService =
-                    Executors.newFixedThreadPool(nThreads);
+                    Executors.newFixedThreadPool(threadsNumber);
 
             executorService.submit(this::loadContent);
-            for (int i = 0; i < nThreads; i++) {
+            for (int i = 0; i < threadsNumber; i++) {
                 executorService.submit(this::loadScores);
             }
 
@@ -81,6 +82,7 @@ public class Analytics {
                 logger.info(String.format("Loaded content #%d", id));
                 Thread.sleep(HACKER_NEWS_TIMEOUT);
             } catch (NoSuchElementException e) {
+                logger.info("Id queue is empty");
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error on content loading", e);
             }
@@ -108,7 +110,7 @@ public class Analytics {
                 logger.info(String.format("Got scores for sentence \"%s\" - %s", sentence, score));
                 Thread.sleep(DEEP_AI_TIMEOUT);
             } catch (NoSuchElementException e) {
-
+                logger.info("Sentence queue is empty");
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error on sentence scoring", e);
                 errorCount++;
@@ -147,7 +149,8 @@ public class Analytics {
     private int getScore(String deepAiAnswerJson) {
         ObjectMapper objectMapper = getObjectMapper();
         try {
-            DeepAiAnswer deepAiAnswer = objectMapper.readValue(deepAiAnswerJson, DeepAiAnswer.class);
+            DeepAiAnswer deepAiAnswer =
+                    objectMapper.readValue(deepAiAnswerJson, DeepAiAnswer.class);
             return deepAiAnswer.output.get(0).score;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error on parsing answer from deepai", e);
