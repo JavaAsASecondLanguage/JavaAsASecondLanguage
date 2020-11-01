@@ -1,7 +1,9 @@
 package io.github.javaasasecondlanguage.lecture07.practice0;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class FixIt2 {
     boolean first = false;
     boolean second = false;

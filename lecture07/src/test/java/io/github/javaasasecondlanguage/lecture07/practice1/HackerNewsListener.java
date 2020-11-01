@@ -14,7 +14,9 @@ public class HackerNewsListener {
         analytics.analyzeHackerNews(List.of(
                 "java", "kotlin", "python", "k8s", "hacker",
                 "c++", "graham", "trump", "biden", "usa", "russia"
-        ));
+        ), 1);
+
+        analytics.join();
         System.out.println(analytics.getStats());
     }
 }
