@@ -14,7 +14,7 @@
 
 7. Окончанием обработки для нас будет совместное условие: скачены все сообщения и буфер для обработки пуст.
 
-`
+```
 Current last id: 24961816, current datetime: 02.11.2020 00:28:06
 [pool-1-thread-11] stats: {python=Stats{mentions=1, score=-1, rating=-0,50}, java=Stats{mentions=0, score=0, rating=0,00}}, queue size: 0
 [pool-1-thread-1] id: 24662000, queue size: 0, mentions: 1, current datetime: 02.11.2020 00:28:10
@@ -42,8 +42,10 @@ Current last id: 24961816, current datetime: 02.11.2020 00:28:06
 [pool-1-thread-4] close download thread, current datetime: 02.11.2020 02:31:23
 [pool-1-thread-1] close download thread, current datetime: 02.11.2020 02:31:23
 
+...
+
 Final stats: {python=Stats{mentions=1147, score=-847, rating=-0,74}, java=Stats{mentions=768, score=-583, rating=-0,76}}
 Total mentors: 1915
- `
+```
 
 Вывод: упоминание python происходило чаще, к программированию, у участников данного ресурса, слабоотрицательное отношение.
