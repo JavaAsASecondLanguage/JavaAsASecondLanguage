@@ -16,16 +16,16 @@ import java.util.concurrent.atomic.LongAdder;
 
 public class Analytics {
 
-    private final int QUEUE_SIZE = 5_000;
-    private final int THREAD_PER_CPU = 32;
-    private final int THREAD_PER_CPU_FOR_AI = 30;
-    private final int RETRY_COUNT = 50;
-    private final int TOTAL_MESSAGES = 300_000;
+    private final int queueSize = 5_000;
+    private final int threadPerCpu = 32;
+    private final int threadPerCpuForAi = 30;
+    private final int retryCount = 50;
+    private final int totalMessages = 300_000;
 
     private final AtomicInteger maxContentId = new AtomicInteger(Integer.MIN_VALUE);
     private final AtomicInteger currentContentId = new AtomicInteger(Integer.MIN_VALUE);
     private final AtomicInteger mention = new AtomicInteger(0);
-    private final BlockingQueue<Pair<String, Integer>> queue = new ArrayBlockingQueue<>(QUEUE_SIZE);
+    private final BlockingQueue<Pair<String, Integer>> queue = new ArrayBlockingQueue<>(queueSize);
     private final ConcurrentHashMap<String, Stats> stats = new ConcurrentHashMap<>();
     private final List<String> denylist = new ArrayList<>();
 
@@ -50,21 +50,23 @@ public class Analytics {
         int id = getLatestContentId();
         if (id > 0) {
 
-            printout("Current last id: " + id + ", current datetime: " + dtf.format(LocalDateTime.now()));
+            printout("Current last id: " + id
+                    + ", current datetime: " + dtf.format(LocalDateTime.now()));
             maxContentId.set(id);
-            currentContentId.set(id - TOTAL_MESSAGES);
+            currentContentId.set(id - totalMessages);
 
             ExecutorService es = Executors.newFixedThreadPool(
-                    Runtime.getRuntime().availableProcessors() * THREAD_PER_CPU);
+                    Runtime.getRuntime().availableProcessors() * threadPerCpu);
 
             for (int i = 0;
-                 i < Runtime.getRuntime().availableProcessors() * (THREAD_PER_CPU - THREAD_PER_CPU_FOR_AI);
+                 i < Runtime.getRuntime().availableProcessors()
+                         * (threadPerCpu - threadPerCpuForAi);
                  i++) {
                 es.submit(this::downloadHackerNewsContent);
             }
 
             for (int i = 0;
-                 i < Runtime.getRuntime().availableProcessors() * THREAD_PER_CPU_FOR_AI;
+                 i < Runtime.getRuntime().availableProcessors() * threadPerCpuForAi;
                  i++) {
                 es.submit(this::getSentiments);
             }
@@ -102,7 +104,7 @@ public class Analytics {
                     ObjectMapper objectMapper = new ObjectMapper();
                     JsonNode root = objectMapper.readTree(content);
                     JsonNode textNode = root.get("text");
-                    if(textNode!=null){
+                    if (textNode != null) {
                         String text = textNode.asText().toLowerCase();
                         if (!text.isBlank()) {
                             Iterator<String> s = stats.keys().asIterator();
@@ -134,7 +136,7 @@ public class Analytics {
         int id = Integer.MIN_VALUE;
         try {
             id = Integer.parseInt(HackerNewsClient.getLatestContentId());
-        } catch (IOException ignored) { }
+        } catch (IOException ignored) { /*ignored.printStackTrace();*/ }
         return id;
     }
 
@@ -153,7 +155,7 @@ public class Analytics {
                 JsonNode root = objectMapper.readTree(sentiments);
                 JsonNode textNode = root.get("output");
                 if (textNode == null || root.get("err") != null) {
-                    if (count < RETRY_COUNT) {
+                    if (count < retryCount) {
                         queue.put(new Pair<>(text, count + 1));
                     } else {
                         printout("[" + Thread.currentThread().getName()
@@ -166,14 +168,14 @@ public class Analytics {
                             String string = strings[i];
                             for (Map.Entry<String, Stats> s : stats.entrySet()) {
                                 if (string.contains(s.getKey())) {
-                                    boolean deny_flag = false;
+                                    boolean denyFlag = false;
                                     for (String deny : denylist) {
                                         if (string.contains(deny)) {
-                                            deny_flag = true;
+                                            denyFlag = true;
                                             break;
                                         }
                                     }
-                                    if (!deny_flag) {
+                                    if (!denyFlag) {
                                         mention.getAndIncrement();
                                         s.getValue().mentions.incrementAndGet();
                                         String sentinent = textNode.get(i).asText("");
@@ -191,7 +193,8 @@ public class Analytics {
                                                 + ", queue size: " + queue.size()
                                                 + ((currentContentId.get() >= maxContentId.get())
                                                     && (queue.size() % 100 == 0)
-                                                    ? ", current datetime: " + dtf.format(LocalDateTime.now()) : "")
+                                                    ? ", current datetime: "
+                                                    + dtf.format(LocalDateTime.now()) : "")
                                         );
                                     }
                                 }
@@ -201,24 +204,24 @@ public class Analytics {
                 }
             } catch (SocketTimeoutException e) {
                 try {
-                    if (count < RETRY_COUNT) {
+                    if (count < retryCount) {
                         queue.put(new Pair<>(text, count + 1));
                     } else {
                         printout("[" + Thread.currentThread().getName()
                                 + "] error Deep-AI: " + e.getMessage()
                                 + ", current datetime: " + dtf.format(LocalDateTime.now()));
                     }
-                } catch (Exception ignored){ }
+                } catch (Exception ignored) { /*ignored.printStackTrace();*/ }
             } catch (JacksonException e) {
                 try {
-                    if (count < RETRY_COUNT) {
+                    if (count < retryCount) {
                         queue.put(new Pair<>(text, count + 1));
                     } else {
                         printout("[" + Thread.currentThread().getName()
                                 + "] error JSON convert: " + e.getMessage()
                                 + ", current datetime: " + dtf.format(LocalDateTime.now()));
                     }
-                } catch (Exception ignored){ }
+                } catch (Exception ignored) { /*e.printStackTrace();*/ }
             } catch (Exception e) {
                 printout("[" + Thread.currentThread().getName()
                         + "]  error on text: " + text
@@ -239,7 +242,9 @@ public class Analytics {
         System.out.println(string);
     }
 
-    public Map<String, Stats> getStats() { return stats; }
+    public Map<String, Stats> getStats() {
+        return stats;
+    }
 
     public static class Stats {
         final AtomicInteger mentions = new AtomicInteger(0);
