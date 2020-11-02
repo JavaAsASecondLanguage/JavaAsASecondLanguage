@@ -1,6 +1,7 @@
 package io.github.javaasasecondlanguage.lecture07.practice0;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 @Disabled
 public class FixIt2 {

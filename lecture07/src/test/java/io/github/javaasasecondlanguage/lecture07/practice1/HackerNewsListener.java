@@ -1,6 +1,7 @@
 package io.github.javaasasecondlanguage.lecture07.practice1;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import java.util.List;
 
@@ -12,10 +13,7 @@ public class HackerNewsListener {
     @Test
     void hackerNewsAnalytics() {
         var analytics = new Analytics();
-        analytics.analyzeHackerNews(List.of(
-                "java", "kotlin", "python", "k8s", "hacker",
-                "c++", "graham", "trump", "biden", "usa", "russia"
-        ));
+        analytics.analyzeHackerNews(List.of("java", "python"), List.of("javascript"));
         System.out.println(analytics.getStats());
     }
 }
