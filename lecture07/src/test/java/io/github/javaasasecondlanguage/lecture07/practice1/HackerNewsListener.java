@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@Disabled
 public class HackerNewsListener {
     /**
      * Practice: Collect data about terms from Hacker News
