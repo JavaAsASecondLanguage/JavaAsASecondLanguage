@@ -7,6 +7,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Public sentiment analysis API
@@ -15,9 +16,13 @@ import java.util.Objects;
  * Requires registration, has 10000 free requests
  */
 public class SentimentsClient {
-    private static final String API_KEY = "INPUT YOUR APPKEY HERE";
+    private static final String API_KEY = "I-DONT-WANT-TO-SHOW-IT-PUBLIC";
 
-    private static final OkHttpClient okHttpClient = new OkHttpClient();
+    private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(40, TimeUnit.SECONDS)
+            .build();
 
     public static String sentiments(String text) throws IOException {
         FormBody body = new FormBody.Builder().add("text", text).build();

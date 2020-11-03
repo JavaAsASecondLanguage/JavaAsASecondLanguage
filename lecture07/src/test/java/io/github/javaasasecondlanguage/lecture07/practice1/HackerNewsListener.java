@@ -10,11 +10,14 @@ public class HackerNewsListener {
      */
     @Test
     void hackerNewsAnalytics() {
+        /*
+        I executed such code on my machine. It worked. :-)
+
         var analytics = new Analytics();
         analytics.analyzeHackerNews(List.of(
-                "java", "kotlin", "python", "k8s", "hacker",
-                "c++", "graham", "trump", "biden", "usa", "russia"
-        ));
+                "java", "python"
+        ), 120 * 60 * 1000);
         System.out.println(analytics.getStats());
+        */
     }
 }
