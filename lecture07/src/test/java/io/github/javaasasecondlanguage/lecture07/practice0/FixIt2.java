@@ -3,10 +3,15 @@ package io.github.javaasasecondlanguage.lecture07.practice0;
 import org.junit.jupiter.api.Test;
 
 public class FixIt2 {
-    boolean first = false;
-    boolean second = false;
+    volatile boolean first = false;
+    volatile boolean second = false;
 
     void setValues() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         first = true;
         second = true;
     }

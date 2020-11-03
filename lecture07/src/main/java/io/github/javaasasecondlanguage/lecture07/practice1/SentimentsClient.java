@@ -15,7 +15,8 @@ import java.util.Objects;
  * Requires registration, has 10000 free requests
  */
 public class SentimentsClient {
-    private static final String API_KEY = "INPUT YOUR APPKEY HERE";
+    private static final String API_KEY = "quickstart-QUdJIGlzIGNvbWluZy4uLi4K";
+
 
     private static final OkHttpClient okHttpClient = new OkHttpClient();
 
