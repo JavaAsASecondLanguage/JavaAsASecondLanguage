@@ -11,15 +11,40 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * Broken implementation of billing service
- * Money are lost here
+ * Not broken implementation of billing service
+ * Money are not lost here
  */
 @Controller
 @RequestMapping("billing")
 public class BillingResource {
-    private Map<String, Integer> userToMoney = new HashMap<>();
+    class User {
+        private final String name;
+        private Integer money;
+        User(String name, Integer money) {
+            this.name = name;
+            this.money = money;
+        }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "name='" + name + '\'' +
+                    ", money=" + money +
+                    '}';
+        }
+    }
+    private final Map<String, User> userToMoney = new ConcurrentHashMap<>();
+    /*
+        statsLock is used to ensure that there is no one executing "/billing/stats" or
+        the only one executing "/billing/stats" with no one executing other requests
+     */
+    private final ReadWriteLock statsLock = new ReentrantReadWriteLock();
 
     /**
      * curl -XPOST localhost:8080/billing/addUser -d "user=sasha&money=100000"
@@ -32,13 +57,20 @@ public class BillingResource {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> addUser(@RequestParam("user") String user,
                                           @RequestParam("money") Integer money) {
-
+        statsLock.readLock().lock();
         if (user == null || money == null) {
+            statsLock.readLock().unlock();
             return ResponseEntity.badRequest().body("");
         }
-        userToMoney.put(user, money);
 
-        return ResponseEntity.ok("Successfully created user [" + user + "] with money " + userToMoney.get(user) + "\n");
+        if (userToMoney.containsKey(user)) {
+            statsLock.readLock().unlock();
+            return ResponseEntity.badRequest().body("User already exist");
+        }
+        userToMoney.put(user, new User(user, money));
+
+        statsLock.readLock().unlock();
+        return ResponseEntity.ok("Successfully created user [" + user + "] with money " + money + "\n");
     }
 
     /**
@@ -52,17 +84,44 @@ public class BillingResource {
     public ResponseEntity<String> sendMoney(@RequestParam("from") String fromUser,
                                             @RequestParam("to") String toUser,
                                             @RequestParam("money") Integer money) {
+        statsLock.readLock().lock();
         if (fromUser == null || toUser == null || money == null) {
+            statsLock.readLock().unlock();
             return ResponseEntity.badRequest().body("");
         }
+
+        User from = null;
+        User to = null;
+
         if (!userToMoney.containsKey(fromUser) || !userToMoney.containsKey(toUser)) {
+            statsLock.readLock().unlock();
             return ResponseEntity.badRequest().body("No such user\n");
         }
-        if (userToMoney.get(fromUser) < money) {
-            return ResponseEntity.badRequest().body("Not enough money to send\n");
+        from = userToMoney.get(fromUser);
+        to = userToMoney.get(toUser);
+
+        User first = null;
+        User second = null;
+        if (from.name.compareTo(to.name) < 0) {
+            first = from;
+            second = to;
+        } else {
+            first = to;
+            second = from;
         }
-        userToMoney.put(fromUser, userToMoney.get(fromUser) - money);
-        userToMoney.put(toUser, userToMoney.get(toUser) + money);
+
+        synchronized (first) {
+            synchronized (second) {
+                if (from.money < money) {
+                    statsLock.readLock().unlock();
+                    return ResponseEntity.badRequest().body("Not enough money to send\n");
+                }
+                from.money -= money;
+                to.money += money;
+            }
+        }
+
+        statsLock.readLock().unlock();
         return ResponseEntity.ok("Send success\n");
     }
 
@@ -74,6 +133,9 @@ public class BillingResource {
             method = RequestMethod.GET,
             produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> getStat() {
-        return ResponseEntity.ok(userToMoney + "\n");
+        statsLock.writeLock().lock();
+        var result = ResponseEntity.ok(userToMoney + "\n");
+        statsLock.writeLock().unlock();
+        return result;
     }
 }
