@@ -12,7 +12,6 @@ import java.util.Map;
  * Note: it is already implemented, use it as reducer example.
  */
 public class CountReducer implements Reducer {
-
     private final String outputColumn;
     int currentCount = 0;
 

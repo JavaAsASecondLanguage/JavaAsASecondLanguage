@@ -10,13 +10,15 @@ import java.util.Collection;
  * Keeps only specified columns.
  */
 public class RetainColumnsMapper implements Mapper {
+    private Collection<String> retainedColumns;
 
     public RetainColumnsMapper(Collection<String> retainedColumns) {
-        throw new IllegalStateException("You must implement this");
+        this.retainedColumns = retainedColumns;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector) {
-        throw new IllegalStateException("You must implement this");
+        var newRecord = inputRecord.copyColumns(this.retainedColumns);
+        collector.collect(newRecord);
     }
 }

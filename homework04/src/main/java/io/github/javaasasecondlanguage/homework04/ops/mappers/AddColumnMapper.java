@@ -10,13 +10,19 @@ import java.util.function.Function;
  * Calculates a new value from record using specified lambda. Then saves it into the outputColumn.
  */
 public class AddColumnMapper implements Mapper {
+    private String outputColumn;
+    private Function<Record, ?> lambda;
 
     public AddColumnMapper(String outputColumn, Function<Record, ?> lambda) {
-        throw new IllegalStateException("You must implement this");
+        this.outputColumn = outputColumn;
+        this.lambda = lambda;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector) {
-        throw new IllegalStateException("You must implement this");
+        var newRecord = inputRecord.copy();
+        var value = this.lambda.apply(newRecord);
+        newRecord.set(this.outputColumn, value);
+        collector.collect(newRecord);
     }
 }
