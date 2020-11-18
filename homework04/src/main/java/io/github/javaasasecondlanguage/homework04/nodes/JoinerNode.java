@@ -11,6 +11,9 @@ public class JoinerNode implements ProcNode {
     private List<String> keyColumns;
     private final RoutingCollector collector = new RoutingCollector();
     private List<Record> leftRecords = new ArrayList<>();
+    private List<Record> rightRecords = new ArrayList<>();
+    private boolean leftTerminated = false;
+    private boolean rightTerminated = false;
 
     public JoinerNode(List<String> keyColumns) {
         this.keyColumns = keyColumns;
@@ -24,41 +27,45 @@ public class JoinerNode implements ProcNode {
     @Override
     public void push(Record inputRecord, int gateNumber) {
         if (gateNumber == 0) {
-            if (!inputRecord.isTerminal()) {
-                leftRecords.add(inputRecord);
+            if (inputRecord.isTerminal()) {
+                this.leftTerminated = true;
+            } else {
+                this.leftRecords.add(inputRecord.copy());
             }
         } else {
             if (inputRecord.isTerminal()) {
-                for (var record : this.leftRecords) {
-                    this.collector.collect(record);
-                }
+                this.rightTerminated = true;
             } else {
-                for (var record : this.leftRecords) {
-                    if (isMatched(record, inputRecord)) {
-                        for (var column : inputRecord.getData().keySet()) {
-                            record.set(column, inputRecord.get(column));
-                        }
-                    }
-                }
+                this.rightRecords.add(inputRecord);
             }
+        }
+
+        if (this.leftTerminated && this.rightTerminated) {
+            joinAndCollect();
         }
     }
 
-//    private List<Record> removeFromLeftRecords(Record rightRecord) {
-//        var res = new ArrayList<Record>();
-//        var newLeftRecords = new ArrayList<Record>();
-//
-//        for (var leftRecord : this.leftRecords) {
-//            if (isMatched(leftRecord, rightRecord)) {
-//                res.add(leftRecord);
-//            } else {
-//                newLeftRecords.add(leftRecord);
-//            }
-//        }
-//
-//        this.leftRecords = newLeftRecords;
-//        return res;
-//    }
+    private void joinAndCollect() {
+        for (var leftRecord : this.leftRecords) {
+            for (var rightRecord : this.rightRecords) {
+
+                if (isMatched(leftRecord, rightRecord)) {
+                    for (var column : rightRecord.getData().keySet()) {
+                        leftRecord.set(column, rightRecord.get(column));
+                    }
+                }
+            }
+
+            this.collector.collect(leftRecord);
+        }
+
+        this.collector.collect(Record.terminalRecord());
+
+        this.leftTerminated = false;
+        this.rightTerminated = false;
+        this.leftRecords.clear();
+        this.rightRecords.clear();
+    }
 
     private boolean isMatched(Record record1, Record record2) {
         for (var column : this.keyColumns) {
