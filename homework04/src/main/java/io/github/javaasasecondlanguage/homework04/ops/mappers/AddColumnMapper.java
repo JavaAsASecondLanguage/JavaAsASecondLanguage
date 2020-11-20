@@ -11,12 +11,18 @@ import java.util.function.Function;
  */
 public class AddColumnMapper implements Mapper {
 
+    private final String outputColumn;
+    private final Function<Record, ?> lambda;
+
     public AddColumnMapper(String outputColumn, Function<Record, ?> lambda) {
-        throw new IllegalStateException("You must implement this");
+        this.outputColumn = outputColumn;
+        this.lambda = lambda;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector) {
-        throw new IllegalStateException("You must implement this");
+        final Record out = inputRecord.copy();
+        out.set(outputColumn, lambda.apply(out));
+        collector.collect(out);
     }
 }
