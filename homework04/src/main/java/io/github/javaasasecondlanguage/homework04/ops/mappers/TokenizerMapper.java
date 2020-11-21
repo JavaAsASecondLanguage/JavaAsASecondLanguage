@@ -4,7 +4,7 @@ import io.github.javaasasecondlanguage.homework04.Collector;
 import io.github.javaasasecondlanguage.homework04.Record;
 import io.github.javaasasecondlanguage.homework04.ops.Mapper;
 
-import static java.util.List.of;
+import java.util.Collections;
 
 /**
  * Splits text in the specified column into words, then creates a new record with each word.
@@ -14,13 +14,21 @@ import static java.util.List.of;
 public class TokenizerMapper implements Mapper {
 
     private static final String SPLIT_PATTERN = "[\\s,\\.\\!\\;\\?\\'\\:\"]+";
+    private final String inputColumn;
+    private final String outputColumn;
 
     public TokenizerMapper(String inputColumn, String outputColumn) {
-        throw new IllegalStateException("You must implement this");
+        this.inputColumn = inputColumn;
+        this.outputColumn = outputColumn;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector) {
-        throw new IllegalStateException("You must implement this");
+        String[] words = inputRecord.getString(inputColumn).split(SPLIT_PATTERN);
+        for(String word : words) {
+            Record newRecord = inputRecord.copyColumnsExcept(Collections.singleton(inputColumn));
+            newRecord.set(outputColumn, word);
+            collector.collect(newRecord);
+        }
     }
 }

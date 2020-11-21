@@ -29,8 +29,8 @@ public class GraphVisualizer {
 //        visualGraph.setAttribute("ui.stylesheet", "url('/Users/ivan.azanov/Documents/Spark/JavaAsASecondLanguage/homework04/src/main/resources/style.css')");
         visualGraph.setAttribute("ui.stylesheet", STYLESHEET);
 
-        visualGraph.setAttribute("layout.force", 0.99);
-        visualGraph.setAttribute("layout.quality", 4);
+        visualGraph.setAttribute("layout.force", 1.5);
+        visualGraph.setAttribute("layout.quality", 1);
 
         Map<ProcNode, Node> procVisualNodeMapping = new LinkedHashMap<>();
         for (ProcNode procNode : procGraph.getInputNodes()) {
@@ -91,6 +91,8 @@ public class GraphVisualizer {
 
         if (operator != null) {
             nodeLabel = operator.getClass().getSimpleName();
+        } else {
+            nodeLabel = procNode.getClass().getSimpleName();
         }
         return nodeLabel;
     }
@@ -144,9 +146,9 @@ public class GraphVisualizer {
             "}\n" +
             "\n" +
             "node {\n" +
-            "    text-size: 30;\n" +
+            "    text-size: 15;\n" +
             "    text-alignment: at-right;\n" +
-            "    text-offset: 20, 20;\n" +
+            "    text-offset: 0, 0;\n" +
             "    text-background-mode: plain;\n" +
             "\n" +
             "    size: 15px;\n" +

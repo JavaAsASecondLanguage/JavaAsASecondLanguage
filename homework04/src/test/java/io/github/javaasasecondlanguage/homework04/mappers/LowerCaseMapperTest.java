@@ -15,7 +15,7 @@ class LowerCaseMapperTest {
     @Test
     void general() {
         var mapper = new LowerCaseMapper("Text");
-
+        System.out.println("there’s");
         List<Record> actualRecords = applyMapperToAllRecords(mapper, inputRecords);
         assertRecordsEqual(expectedRecords, actualRecords);
     }
