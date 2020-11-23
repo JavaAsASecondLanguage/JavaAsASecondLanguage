@@ -18,9 +18,7 @@ public class MapperNode  implements ProcNode {
     }
 
     @Override
-    public RoutingCollector getCollector() {
-        return collector;
-    }
+    public RoutingCollector getCollector() { return collector; }
 
     @Override
     public void push(Record inputRecord, int gateNumber) {

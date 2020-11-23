@@ -11,12 +11,18 @@ import java.util.Collection;
  */
 public class RetainColumnsMapper implements Mapper {
 
+    private final Collection<String> retainedColumns;
+
     public RetainColumnsMapper(Collection<String> retainedColumns) {
-        throw new IllegalStateException("You must implement this");
+        this.retainedColumns = retainedColumns;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector) {
-        throw new IllegalStateException("You must implement this");
+        if (inputRecord.isTerminal()) {
+            collector.collect(inputRecord);
+        } else {
+            collector.collect(inputRecord.copyColumns(retainedColumns));
+        }
     }
 }

@@ -11,18 +11,24 @@ import java.util.Map;
  */
 public class SumReducer implements Reducer {
 
+    private final String inputColumn;
+    private final String outputColumn;
+    private Double currentSum = 0.0;
+
     public SumReducer(String inputColumn, String outputColumn) {
-        throw new IllegalStateException("You must implement this");
+        this.inputColumn = inputColumn;
+        this.outputColumn = outputColumn;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector, Map<String, Object> groupByEntries) {
-        throw new IllegalStateException("You must implement this");
+        currentSum += inputRecord.getDouble(inputColumn);
     }
 
     @Override
     public void signalGroupWasFinished(Collector collector, Map<String, Object> groupByEntries) {
-        throw new IllegalStateException("You must implement this");
+        collector.collect(new Record(groupByEntries).set(outputColumn, currentSum));
+        currentSum = 0.0;
     }
 
 }

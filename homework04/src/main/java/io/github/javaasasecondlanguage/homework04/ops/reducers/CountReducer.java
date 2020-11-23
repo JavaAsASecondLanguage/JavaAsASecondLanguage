@@ -27,10 +27,7 @@ public class CountReducer implements Reducer {
 
     @Override
     public void signalGroupWasFinished(Collector collector, Map<String, Object> groupByEntries) {
-        Record outputRecord = new Record(groupByEntries);
-        outputRecord.set(outputColumn, currentCount);
-        collector.collect(outputRecord);
-
+        collector.collect(new Record(groupByEntries).set(outputColumn, currentCount));
         currentCount = 0;
     }
 }

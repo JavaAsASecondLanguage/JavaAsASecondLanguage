@@ -5,7 +5,12 @@ import io.github.javaasasecondlanguage.homework04.Record;
 import io.github.javaasasecondlanguage.homework04.utils.ListDumper;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static io.github.javaasasecondlanguage.homework04.utils.AssertionUtils.assertRecordsEqual;
 import static io.github.javaasasecondlanguage.homework04.utils.TestUtils.convertToRecords;

@@ -11,12 +11,18 @@ import java.util.function.Function;
  */
 public class FilterMapper implements Mapper {
 
+    private final Function<Record, Boolean> predicate;
+
     public FilterMapper(Function<Record, Boolean> predicate) {
-        throw new IllegalStateException("You must implement this");
+        this.predicate = predicate;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector) {
-        throw new IllegalStateException("You must implement this");
+        if (inputRecord.isTerminal()) {
+            collector.collect(inputRecord);
+        } else if (this.predicate.apply(inputRecord)) {
+            collector.collect(inputRecord);
+        }
     }
 }

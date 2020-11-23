@@ -10,7 +10,5 @@ import io.github.javaasasecondlanguage.homework04.ops.Mapper;
 public class IdentityMapper implements Mapper {
 
     @Override
-    public void apply(Record inputRecord, Collector collector) {
-        collector.collect(inputRecord);
-    }
+    public void apply(Record inputRecord, Collector collector) { collector.collect(inputRecord); }
 }
