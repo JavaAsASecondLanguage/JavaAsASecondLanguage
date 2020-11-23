@@ -16,6 +16,7 @@ public class VisualizationDemo {
     void launch() throws InterruptedException {
         var graph = Tfidf.createGraph();
         visualizeGraph(graph);
-        Thread.sleep(Long.MAX_VALUE);
+        //Thread.sleep(Long.MAX_VALUE);
+        Thread.sleep(10000);
     }
 }
