@@ -30,7 +30,6 @@ public class CountReducer implements Reducer {
         Record outputRecord = new Record(groupByEntries);
         outputRecord.set(outputColumn, currentCount);
         collector.collect(outputRecord);
-
         currentCount = 0;
     }
 }

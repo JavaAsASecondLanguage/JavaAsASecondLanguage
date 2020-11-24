@@ -4,33 +4,33 @@ import io.github.javaasasecondlanguage.homework04.Collector;
 import io.github.javaasasecondlanguage.homework04.Record;
 import io.github.javaasasecondlanguage.homework04.ops.Reducer;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
- * Counts sum of values in a specified column for each group and returns a single record with a sum.
+ * Returns distinct records.
  */
-public class SumReducer implements Reducer {
+public class DistinctReducer implements Reducer {
 
     private final String inputColumn;
-    private final String outputColumn;
-    private double sum;
+    private final Set<String> found;
 
-    public SumReducer(String inputColumn, String outputColumn) {
+    public DistinctReducer(String inputColumn) {
         this.inputColumn = inputColumn;
-        this.outputColumn = outputColumn;
+        found = new HashSet<>();
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector, Map<String, Object> groupByEntries) {
-        sum += inputRecord.getDouble(inputColumn);
+        if (!found.contains(inputRecord.getString(inputColumn))) {
+            collector.collect(inputRecord);
+            found.add(inputRecord.getString(inputColumn));
+        }
     }
 
     @Override
     public void signalGroupWasFinished(Collector collector, Map<String, Object> groupByEntries) {
-        Record tmpRecord = new Record(groupByEntries);
-        tmpRecord.set(outputColumn, sum);
-        collector.collect(tmpRecord);
-        sum = 0;
+        found.clear();
     }
-
 }
