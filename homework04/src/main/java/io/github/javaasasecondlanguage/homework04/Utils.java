@@ -56,7 +56,7 @@ public class Utils {
         return 0;
     }
 
-    public static Comparable getComparable(@org.jetbrains.annotations.NotNull Record record, String column) {
+    public static Comparable getComparable(Record record, String column) {
         Double doubleValue = record.getDouble(column);
         if (doubleValue != null) {
             return doubleValue;
