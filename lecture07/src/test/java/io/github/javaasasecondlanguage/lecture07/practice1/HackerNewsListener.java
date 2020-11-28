@@ -10,11 +10,5 @@ public class HackerNewsListener {
      */
     @Test
     void hackerNewsAnalytics() {
-        var analytics = new Analytics();
-        analytics.analyzeHackerNews(List.of(
-                "java", "kotlin", "python", "k8s", "hacker",
-                "c++", "graham", "trump", "biden", "usa", "russia"
-        ));
-        System.out.println(analytics.getStats());
     }
 }
