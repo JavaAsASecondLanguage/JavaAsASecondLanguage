@@ -10,18 +10,24 @@ import java.util.Map;
  * Returns at most maxAmount records per group.
  */
 public class FirstNReducer implements Reducer {
+    private final int maxAmount;
+    private int curAmount = 0;
 
     public FirstNReducer(int maxAmount) {
-        throw new IllegalStateException("You must implement this");
+        this.maxAmount = maxAmount;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector, Map<String, Object> groupByEntries) {
-        throw new IllegalStateException("You must implement this");
+        if (this.curAmount < this.maxAmount) {
+            Record outputRecord = inputRecord.copy();
+            collector.collect(outputRecord);
+            this.curAmount++;
+        }
     }
 
     @Override
     public void signalGroupWasFinished(Collector collector, Map<String, Object> groupByEntries) {
-        throw new IllegalStateException("You must implement this");
+        this.curAmount = 0;
     }
 }

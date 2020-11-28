@@ -16,7 +16,7 @@ public class WordCount {
                 .init()
                 .map(new RetainColumnsMapper(of("Author", "Text")))
                 .map(new LowerCaseMapper("Text"))
-                .map(new TokenizerMapper("Text", "Word "))
+                .map(new TokenizerMapper("Text", "Word"))
                 .sortThenReduceBy(of("Author"), new CountReducer("TotalWords"));
 
         return new ProcGraph(

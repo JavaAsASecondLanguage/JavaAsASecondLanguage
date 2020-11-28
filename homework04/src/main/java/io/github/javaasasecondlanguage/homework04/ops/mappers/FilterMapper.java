@@ -10,13 +10,17 @@ import java.util.function.Function;
  * Drops records if they return true on predicate.
  */
 public class FilterMapper implements Mapper {
+    private final Function<Record, Boolean> predicate;
 
     public FilterMapper(Function<Record, Boolean> predicate) {
-        throw new IllegalStateException("You must implement this");
+        this.predicate = predicate;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector) {
-        throw new IllegalStateException("You must implement this");
+        if (this.predicate.apply(inputRecord) == true) {
+            Record outputRecord = inputRecord.copy();
+            collector.collect(outputRecord);
+        }
     }
 }
