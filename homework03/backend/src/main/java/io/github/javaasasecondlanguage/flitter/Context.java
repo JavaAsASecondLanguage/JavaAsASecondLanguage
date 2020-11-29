@@ -10,13 +10,19 @@ import java.util.*;
 public class Context {
     //-------------------------------------------
     // static section
-    private static Context instance;
+    private static volatile Context instance;
 
     public static Context getInstance() {
-        if (instance == null) {
-            instance = new Context();
+        Context localInstance = instance;
+        if (localInstance == null) {
+            synchronized (Context.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new Context();
+                }
+            }
         }
-        return instance;
+        return localInstance;
     }
 
     //-------------------------------------------
