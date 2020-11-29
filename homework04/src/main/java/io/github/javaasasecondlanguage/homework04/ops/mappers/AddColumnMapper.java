@@ -3,6 +3,7 @@ package io.github.javaasasecondlanguage.homework04.ops.mappers;
 import io.github.javaasasecondlanguage.homework04.Collector;
 import io.github.javaasasecondlanguage.homework04.Record;
 import io.github.javaasasecondlanguage.homework04.ops.Mapper;
+import org.bouncycastle.util.Strings;
 
 import java.util.function.Function;
 
@@ -11,12 +12,16 @@ import java.util.function.Function;
  */
 public class AddColumnMapper implements Mapper {
 
+    private final String outputColumn;
+    private final Function<Record, ?> lambda;
+
     public AddColumnMapper(String outputColumn, Function<Record, ?> lambda) {
-        throw new IllegalStateException("You must implement this");
+        this.outputColumn = outputColumn;
+        this.lambda = lambda;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector) {
-        throw new IllegalStateException("You must implement this");
+        collector.collect(inputRecord.set(outputColumn, lambda.apply(inputRecord)));
     }
 }

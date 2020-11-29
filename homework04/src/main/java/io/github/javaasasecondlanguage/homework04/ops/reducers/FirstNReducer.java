@@ -11,17 +11,23 @@ import java.util.Map;
  */
 public class FirstNReducer implements Reducer {
 
+    private int amount;
+    private final int maxCount;
+
     public FirstNReducer(int maxAmount) {
-        throw new IllegalStateException("You must implement this");
+        this.maxCount = maxAmount;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector, Map<String, Object> groupByEntries) {
-        throw new IllegalStateException("You must implement this");
+        if (amount < maxCount) {
+            collector.collect(inputRecord);
+            amount++;
+        }
     }
 
     @Override
     public void signalGroupWasFinished(Collector collector, Map<String, Object> groupByEntries) {
-        throw new IllegalStateException("You must implement this");
+        this.amount = 0;
     }
 }
