@@ -9,12 +9,17 @@ import io.github.javaasasecondlanguage.homework04.ops.Mapper;
  */
 public class LowerCaseMapper implements Mapper {
 
+    private final String column;
+
     public LowerCaseMapper(String column) {
-        throw new IllegalStateException("You must implement this");
+        this.column = column;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector) {
-        throw new IllegalStateException("You must implement this");
+        var text = inputRecord.get(this.column);
+        // maybe should throw exception if column null or not String
+        var lower = text == null ? null : text.toString().toLowerCase();
+        collector.collect(inputRecord.copy().set(this.column, lower));
     }
 }

@@ -4,6 +4,9 @@ import io.github.javaasasecondlanguage.homework04.Collector;
 import io.github.javaasasecondlanguage.homework04.Record;
 import io.github.javaasasecondlanguage.homework04.ops.Mapper;
 
+import java.util.Arrays;
+import java.util.Set;
+
 import static java.util.List.of;
 
 /**
@@ -14,13 +17,19 @@ import static java.util.List.of;
 public class TokenizerMapper implements Mapper {
 
     private static final String SPLIT_PATTERN = "[\\s,\\.\\!\\;\\?\\'\\:\"]+";
+    private final String inputColumn;
+    private final String outputColumn;
 
     public TokenizerMapper(String inputColumn, String outputColumn) {
-        throw new IllegalStateException("You must implement this");
+        this.inputColumn = inputColumn;
+        this.outputColumn = outputColumn;
     }
 
     @Override
     public void apply(Record inputRecord, Collector collector) {
-        throw new IllegalStateException("You must implement this");
+        var text = (String) inputRecord.get(inputColumn);
+        Arrays.stream(text.split(SPLIT_PATTERN))
+            .map(token -> inputRecord.copyColumnsExcept(Set.of(inputColumn)).set(outputColumn, token))
+            .forEach(collector::collect);
     }
 }

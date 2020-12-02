@@ -3,7 +3,7 @@ version = "1.0-SNAPSHOT"
 
 plugins {
     java
-//    checkstyle
+    checkstyle
 }
 
 java {
@@ -27,10 +27,10 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.3.1")
 }
 
-//checkstyle {
-//    toolVersion = "8.36.1"
-//    config = resources.text.fromFile("../config/checkstyle/checkstyle.xml")
-//}
+checkstyle {
+    toolVersion = "8.36.1"
+    config = resources.text.fromFile("../config/checkstyle/checkstyle.xml")
+}
 
 //tasks.withType<Checkstyle> {
 //    reports {
